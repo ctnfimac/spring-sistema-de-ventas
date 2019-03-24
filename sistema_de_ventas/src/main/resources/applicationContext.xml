@@ -19,14 +19,12 @@
 	<mvc:annotation-driven />
 
 	<!--Se indica que el transaction manager a utilizar en la capa de servicios es el bean declarado en hibernateContext.xml-->
-	<tx:annotation-driven transaction-manager="transactionManager" />
+<!-- 	<tx:annotation-driven transaction-manager="transactionManager" /> -->
 
 	<!--Se indican qué paquetes debe escanear Spring al levantar el contexto para encontrar componentes, -->
 	<!--esto es clases anotadas como @Controller, @Service o @Repository-->
-	<context:component-scan base-package="ar.edu.unlam.tallerweb1.controladores" />
-	<context:component-scan base-package="ar.edu.unlam.tallerweb1.dao" />
-	<context:component-scan base-package="ar.edu.unlam.tallerweb1.servicios" />
-	<context:component-scan base-package="ar.edu.unlam.tallerweb1.tpoModels" />
-	
-
+	<context:component-scan base-package="com.christian.controllers" />
+<!-- 	<context:component-scan base-package="com.christian.dao" /> -->
+<!-- 	<context:component-scan base-package="com.christian.models" /> -->
+<!-- 	<context:component-scan base-package="com.christian.services" /> -->
 </beans>

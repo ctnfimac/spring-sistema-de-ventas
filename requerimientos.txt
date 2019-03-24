@@ -1,0 +1,16 @@
+App_Ventas
+Se necesita una aplicación para controlar las ventas y el stock de productos electrónicos.
+la app es administrada por el dueño el cual contará con un usuario y contraseña para ingresar
+al sistema, el dueño se encargara de administrar el stock de productos teniendo la posibilidad de
+hacer un crud con ellas, también podrá ver a los clientes y repartidores registrados teniendo la
+posibilidad de bloquearlos y desbloquearlos, y también ver las estadisticas de las ventas como 
+por ejemplo la cantidad de ventas por mes...
+Los clientes tienen como datos su nombre, email,direccion(nombre,altura,localidad) estos se registran
+mediante un formulario de registro y entran a su panel mediante un formulario de login, desde el panel tienen la posibilidad de
+ver un historial de sus pedidos realizados y estado del pedido actual si es que lo hubiera.
+los clientes podran agregar productos al carrito, eliminarlos, aumentar y disminuir,por último registrar
+la compra.al registrar la compra podra introducir a la dirección a la que se lo enviará, si no completa 
+este campo se lo enviara a la direccion por defecto del cliente.
+los repartidores se registraran con su nombre, dni, telefono. tendran un estado que indicará si estan disponibles o no,
+y los pedidos se les asignaran automaticamente una vez que este indique que ya esta disponible.
+los productos mostrados en la web pueden ser filtrados por su categoria.

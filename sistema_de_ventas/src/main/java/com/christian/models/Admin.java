@@ -21,7 +21,11 @@ public class Admin {
 	// constructores
 	
 	public Admin(){}
-	
+	public Admin(String usuario, String password) {
+		this.usuario = usuario;
+		this.password = password;
+	}
+
 	
 	// setters y getters
 	

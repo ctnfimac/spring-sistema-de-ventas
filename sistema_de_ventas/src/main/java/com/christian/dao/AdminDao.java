@@ -1,5 +1,7 @@
 package com.christian.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.christian.models.Admin;
 
 public interface AdminDao {

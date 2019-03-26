@@ -11,7 +11,7 @@ public class Admin {
 	// propiedades
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue
 	private Long id;
 	
 	private String usuario;

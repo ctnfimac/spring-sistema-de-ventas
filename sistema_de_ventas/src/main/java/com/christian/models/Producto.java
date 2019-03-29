@@ -1,6 +1,7 @@
 package com.christian.models;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,22 +11,28 @@ import javax.persistence.ManyToOne;
 public class Producto {
 	@Id @GeneratedValue
 	private Long id;
+	
+	@Column(unique=true)
+	private String code;
+	
 	private String nombre;
 	private String descripcion;
+	private String urlimg;
 	private Integer cantidad;
-	private Float precio;
+	private Double precio;
 	
 	@ManyToOne (cascade = { CascadeType.ALL })
 	private Categoria categoria;
 	
 	public Producto(){}
 
-	public Producto(String nombre, String descripcion, Integer cantidad, Float precio) {
-		super();
+	public Producto(String nombre,String code, String urlimg, String descripcion, Integer cantidad, Double d) {
 		this.nombre = nombre;
+		this.code = code;
+		this.urlimg = urlimg;
 		this.descripcion = descripcion;
 		this.cantidad = cantidad;
-		this.precio = precio;
+		this.precio = d;
 	}
 
 	public Long getId() {
@@ -34,6 +41,14 @@ public class Producto {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getNombre() {
@@ -51,6 +66,15 @@ public class Producto {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+	
+
+	public String getUrlimg() {
+		return urlimg;
+	}
+
+	public void setUrlimg(String urlimg) {
+		this.urlimg = urlimg;
+	}
 
 	public Integer getCantidad() {
 		return cantidad;
@@ -60,13 +84,20 @@ public class Producto {
 		this.cantidad = cantidad;
 	}
 
-	public Float getPrecio() {
+	public Double getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(Float precio) {
+	public void setPrecio(Double precio) {
 		this.precio = precio;
 	}
 	
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
 	
 }

@@ -7,9 +7,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
 import com.christian.models.Admin;
-import com.christian.models.Cliente;
-import com.christian.models.Repartidor;
-
 
 @Repository("AdminDao")
 public class AdminDaoImpl implements AdminDao{

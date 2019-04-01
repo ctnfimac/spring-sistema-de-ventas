@@ -15,6 +15,14 @@ public class Cliente extends Usuario{
 
 	public Cliente(){}
 	
+	public Cliente(String nombre, String email, String password, String estado,
+				String direccionCalle, String direccionAltura, Localidad localidad) {
+		super(nombre,email,password,estado);
+		this.direccionCalle = direccionCalle;
+		this.direccionAltura = direccionAltura;
+		this.localidad = localidad;
+	}
+
 	public String getDireccionCalle() {
 		return direccionCalle;
 	}

@@ -15,7 +15,6 @@ public class Admin {
 	private Long id;
 	private String usuario;
 	private String password;
-	private Boolean cargaDePoductos = false;
 	
 	// constructores
 	

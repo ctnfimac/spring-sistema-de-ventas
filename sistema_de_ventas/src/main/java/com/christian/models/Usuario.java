@@ -12,15 +12,15 @@ public class Usuario{
 	private String nombre;
 	private String email;
 	private String password;
-	private String habilitado;
+	private String estado;
 	
 	public Usuario(){}
 	
-	public Usuario(String nombre, String email, String password, String habilitado) {
+	public Usuario(String nombre, String email, String password, String estado) {
 		this.nombre = nombre;
 		this.email = email;
 		this.password = password;
-		this.habilitado = habilitado;
+		this.estado = estado;
 	}
 
 	public Long getId() {
@@ -55,15 +55,12 @@ public class Usuario{
 		this.password = password;
 	}
 
-	public String getHabilitado() {
-		return habilitado;
+	public String getEstado() {
+		return estado;
 	}
 
-	public void setHabilitado(String habilitado) {
-		this.habilitado = habilitado;
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
-	
-	
-	
-	
+
 }

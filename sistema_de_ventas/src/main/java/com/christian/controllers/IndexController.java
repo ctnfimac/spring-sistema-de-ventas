@@ -24,14 +24,16 @@ public class IndexController {
 	@Inject 
 	private ProductoService servicioProducto;
 	
+	
 	@RequestMapping(path={"/index","/"}, method = RequestMethod.GET)
 	public ModelAndView index(){
-		servicioAdmin.addAdmin(new Admin("christian","spring"));
-		if(servicioProducto.cantidadDeProductos() == 0 || servicioProducto.cantidadDeProductos() == null )
-			servicioProducto.cargarProductos();
+//		servicioAdmin.addAdmin(new Admin("christian","spring"));
+//		if(servicioProducto.cantidadDeProductos() == 0 || servicioProducto.cantidadDeProductos() == null )
+//			servicioProducto.cargarProductos();
 		ModelMap modelo = new ModelMap();
 		List<Producto> productos = servicioProducto.getProductos();
-		modelo.put("productos", servicioProducto.getProductos());
+		
+		modelo.put("productos", productos);
 		return new ModelAndView("index",modelo);
 	}
 }

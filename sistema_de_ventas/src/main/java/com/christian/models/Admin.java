@@ -13,10 +13,9 @@ public class Admin {
 	@Id
 	@GeneratedValue
 	private Long id;
-	
 	private String usuario;
-	
 	private String password;
+	private Boolean cargaDePoductos = false;
 	
 	// constructores
 	

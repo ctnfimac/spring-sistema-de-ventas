@@ -57,4 +57,9 @@ public class ClienteServiceImpl implements ClienteService {
 		
 	}
 
+	@Override
+	public String cambiarEstadoPorId(Long id) {
+		return clienteDao.cambiarEstadoPorId(id);
+	}
+
 }

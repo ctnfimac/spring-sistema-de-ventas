@@ -12,4 +12,5 @@ public interface ClienteService {
 	void deleteCliente(Long id);
 	void updateCliente(Cliente clienteOld, Cliente clienteNew);
 	void loadClientes();
+	String cambiarEstadoPorId(Long id);
 }

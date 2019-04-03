@@ -69,7 +69,7 @@ public class ClienteDaoImpl implements ClienteDao{
 		Cliente cliente1 = new Cliente("Tom Y Jerry", "tomyjerry@gmail.com", "tom", "habilitado",
 										"venezuela", "5500", localidad1);
 		
-		Cliente cliente2 = new Cliente("Dunka", "dunka@gmail.com", "dun", "desabilitado",
+		Cliente cliente2 = new Cliente("Dunka", "dunka@gmail.com", "dun", "deshabilitado",
 				"las tunas", "11122", localidad2);
 		
 		session.save(localidad1);
@@ -77,6 +77,23 @@ public class ClienteDaoImpl implements ClienteDao{
 		session.save(cliente1);
 		session.save(cliente2);
 //		session.close();
+	}
+
+	@Override
+	public String cambiarEstadoPorId(Long id) {
+		final Session session = sessionFactory.getCurrentSession();
+		
+		Cliente cliente = (Cliente) session.createCriteria(Cliente.class)
+				.add(Restrictions.eq("id",id)).uniqueResult();
+		
+		String estadoActual = cliente.getEstado();
+		
+		if(estadoActual.equals("habilitado")) cliente.setEstado("deshabilitado");
+		else cliente.setEstado("habilitado");
+		
+		session.update(cliente);
+		
+		return cliente.getEstado();
 	}
 
 }

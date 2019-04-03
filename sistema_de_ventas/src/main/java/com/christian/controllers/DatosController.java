@@ -26,10 +26,12 @@ public class DatosController {
 	
 	@RequestMapping(path="/load",method=RequestMethod.GET)
 	public ModelAndView load(){
-		servicioAdmin.addAdmin(new Admin("christian","spring"));
-		if(servicioProducto.cantidadDeProductos() == 0 || servicioProducto.cantidadDeProductos() == null )
+		if(servicioProducto.cantidadDeProductos() == 0 || servicioProducto.cantidadDeProductos() == null ){
+			servicioAdmin.addAdmin(new Admin("christian","spring"));
 			servicioProducto.cargarProductos();
-		clienteService.loadClientes();
+			clienteService.loadClientes();
+		}
+			
 		return new ModelAndView("redirect:/index");
 	}
 }

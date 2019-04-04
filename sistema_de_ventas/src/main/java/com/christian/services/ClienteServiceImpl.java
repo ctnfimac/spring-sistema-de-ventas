@@ -47,8 +47,7 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public void deleteCliente(Long id) {
-		// TODO Auto-generated method stub
-		
+		clienteDao.deleteCliente(id);
 	}
 
 	@Override

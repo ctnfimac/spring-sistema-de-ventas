@@ -49,8 +49,11 @@ public class ClienteDaoImpl implements ClienteDao{
 
 	@Override
 	public void deleteCliente(Long id) {
-		// TODO Auto-generated method stub
-		
+		final Session session = sessionFactory.getCurrentSession();
+		Cliente cliente = (Cliente) session.createCriteria(Cliente.class)
+				.add(Restrictions.eq("id", id))
+				.uniqueResult();
+		session.delete(cliente);	
 	}
 
 	@Override

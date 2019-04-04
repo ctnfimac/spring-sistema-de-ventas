@@ -18,7 +18,7 @@
              </thead>
              <tbody>
              	<c:forEach var="cliente" items="${clientes}">
-            		 <tr>
+            		 <tr id="cliente${cliente.getId()}">
 		                 <th scope="row class="align-middle"">${cliente.getId()}</th>
 		                 <td class="align-middle">${cliente.getNombre()}</td>
 		                 <td class="align-middle">${cliente.getEmail()}</td>
@@ -28,7 +28,8 @@
 		                 <td class="align-middle" id="clienteEstado${cliente.getId()}">${cliente.getEstado()}</td>
 		                 <td class="align-middle m-0">
 		                 	<div class="btn-group" role="group">
-      							<button type="button" value="${cliente.getId()}" class="btn btn-success btn-sm eventEstado">Cambiar Estado</button>	                 		
+      							<button type="button" value="${cliente.getId()}" class="btn btn-success btn-sm eventEstado">Cambiar Estado</button>
+      							<button type="button" value="${cliente.getId()}" class="btn btn-danger btn-sm eventStateDelete">Delete</button>		                 		
 		                 	</div>
 		                 </td>
 	               </tr>

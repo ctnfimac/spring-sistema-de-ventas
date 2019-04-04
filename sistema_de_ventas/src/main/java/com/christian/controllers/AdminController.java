@@ -34,4 +34,10 @@ public class AdminController {
 		String result = clienteService.cambiarEstadoPorId(id);
 		return result;
 	}
+	
+	@RequestMapping(path="/eliminacionCliente", method=RequestMethod.GET)
+	public @ResponseBody String eliminacionCliente(@RequestParam(value="id") Long id){
+		clienteService.deleteCliente(id);
+		return "se elimino correctamente";
+	}
 }

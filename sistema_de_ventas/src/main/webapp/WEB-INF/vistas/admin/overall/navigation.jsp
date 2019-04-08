@@ -12,6 +12,11 @@
                 <span class="sr-only">(current)</span>
               </a>
             </li>
+             <li class="nav-item active">
+              <a class="nav-link waves-effect" href="productos">Productos
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
           </ul>
           <ul class="navbar-nav nav-flex-icons">
             <li class="nav-item">
@@ -32,7 +37,11 @@
           <i class="fas fa-chart-pie mr-3"></i>Administración
         </a>
         <a href="admin" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-table mr-3"></i>Clientes</a>
+          <i class="fas fa-table mr-3"></i>Clientes
+         </a>
+         <a href="productos" class="list-group-item list-group-item-action waves-effect">
+          <i class="fas fa-table mr-3"></i>Productos
+         </a>
       </div>
     </div>
   </header>

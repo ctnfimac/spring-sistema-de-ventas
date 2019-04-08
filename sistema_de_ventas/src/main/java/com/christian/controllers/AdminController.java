@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.christian.models.Cliente;
+import com.christian.models.Producto;
 import com.christian.services.ClienteService;
+import com.christian.services.ProductoService;
 
 @Controller
 public class AdminController {
@@ -21,12 +23,24 @@ public class AdminController {
 	@Inject
 	private ClienteService clienteService;
 	
+	@Inject
+	private ProductoService productoService;
+	
 	@RequestMapping(path="/admin", method=RequestMethod.GET)
 	public ModelAndView irAadmin(){
 		ModelMap modelo = new ModelMap();
 		List<Cliente> clientes = clienteService.getClientes();
 		modelo.put("clientes", clientes);
 		return new ModelAndView("admin",modelo);
+	}
+	
+	@RequestMapping(path="/productos")
+	public ModelAndView irAproductos(){
+		ModelMap modelo = new ModelMap();
+		List<Producto> productos = null;
+		productos = productoService.getProductos();
+		modelo.put("productos", productos);
+		return new ModelAndView("productos",modelo);
 	}
 	
 	@RequestMapping(path="/habilitacionDeCliente", method = RequestMethod.GET)
@@ -40,4 +54,6 @@ public class AdminController {
 		clienteService.deleteCliente(id);
 		return "se elimino correctamente";
 	}
+	
+	
 }

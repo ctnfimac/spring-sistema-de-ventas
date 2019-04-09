@@ -3,7 +3,7 @@
   	<div class="col-md-12 mb-4 mt-4">
        <div class="card">
        <div class="card-header align-middle h-25">
-		<button class="btn btn-success float-right">agregar nuevo</button>
+		<button class="btn btn-success float-right" data-toggle="modal" data-target="#modalAgregar">agregar nuevo</button>
 		</div>
          <div class="card-body">
          <div class="table-responsive">

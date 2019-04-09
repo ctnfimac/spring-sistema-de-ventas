@@ -2,6 +2,7 @@ package com.christian.dao;
 
 import java.util.List;
 
+import com.christian.models.Categoria;
 import com.christian.models.Producto;
 
 public interface ProductoDao {
@@ -12,4 +13,5 @@ public interface ProductoDao {
 	Producto obtenerProducto(Long id);
 	Integer cantidadDeProductos();
 	List<Producto> getProductos();
+	List<Categoria> getCategorias();
 }

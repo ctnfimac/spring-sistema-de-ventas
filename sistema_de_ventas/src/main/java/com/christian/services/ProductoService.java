@@ -2,6 +2,7 @@ package com.christian.services;
 
 import java.util.List;
 
+import com.christian.models.Categoria;
 import com.christian.models.Producto;
 
 public interface ProductoService {
@@ -12,4 +13,5 @@ public interface ProductoService {
 	Producto obtenerProducto(Long id);
 	Integer cantidadDeProductos();
 	List<Producto> getProductos();
+	List<Categoria> getCategorias();
 }

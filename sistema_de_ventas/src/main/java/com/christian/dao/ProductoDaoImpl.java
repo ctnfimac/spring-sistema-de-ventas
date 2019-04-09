@@ -93,4 +93,13 @@ public class ProductoDaoImpl implements ProductoDao {
 		return productos;
 	}
 
+	@Override
+	public List<Categoria> getCategorias() {
+		final Session session = sessionFactory.getCurrentSession();
+		List<Categoria> categorias = null;
+		categorias = session.createCriteria(Categoria.class)
+				.list();
+		return categorias;
+	}
+
 }

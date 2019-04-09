@@ -5,6 +5,6 @@
  <main class="pt-5 mx-lg-5">
   <%@include file="admin/productosTabla.jsp" %>
  </main>
- 
+  <%@include file="admin/agregarModal.jsp" %>
   
 <%@include file="admin/overall/footer.jsp"%>

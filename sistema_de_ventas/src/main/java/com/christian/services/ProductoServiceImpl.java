@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.christian.dao.ProductoDao;
+import com.christian.models.Categoria;
 import com.christian.models.Producto;
 
 @Service("ProductoService")
@@ -54,6 +55,11 @@ public class ProductoServiceImpl implements ProductoService{
 	@Override
 	public List<Producto> getProductos() {
 		return productoDao.getProductos();
+	}
+
+	@Override
+	public List<Categoria> getCategorias() {
+		return productoDao.getCategorias();
 	}
 
 }

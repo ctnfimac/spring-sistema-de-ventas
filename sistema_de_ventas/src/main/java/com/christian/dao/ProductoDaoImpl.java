@@ -20,6 +20,8 @@ public class ProductoDaoImpl implements ProductoDao {
 	
 	@Override
 	public void agregarProducto(Producto producto) {
+		final Session session = sessionFactory.getCurrentSession();
+		session.save(producto);
 	}
 
 	@Override

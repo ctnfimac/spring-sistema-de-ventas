@@ -53,7 +53,7 @@
 		      </div>
 		      <div class="modal-footer d-flex justify-content-center">
 		      	<button class="btn btn-default" class="close" data-dismiss="modal">Cancelar</button>
-		        <button type="submit" class="btn btn-default">Agregar</button>
+		        <button type="button" class="btn btn-default" id="btnAddProducto">Agregar</button>
 		      </div>
 	      </form>
 	    </div>

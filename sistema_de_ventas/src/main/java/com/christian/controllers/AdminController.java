@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.christian.clases.CProducto;
 import com.christian.models.Categoria;
 import com.christian.models.Cliente;
 import com.christian.models.Producto;
@@ -44,8 +45,11 @@ public class AdminController {
 		List<Categoria> categorias = null;
 		categorias = productoService.getCategorias();
 		
+		CProducto cproducto = new CProducto();
+		
 		modelo.put("productos", productos);
 		modelo.put("categorias", categorias);
+		modelo.put("cproducto", cproducto);
 		return new ModelAndView("productos",modelo);
 	}
 	

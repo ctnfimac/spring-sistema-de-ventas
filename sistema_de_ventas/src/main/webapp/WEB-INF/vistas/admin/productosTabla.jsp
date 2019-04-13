@@ -45,17 +45,3 @@
         </div>
       </div>
     </div>
-    
-<!--     private Long id; -->
-	
-<!-- 	@Column(unique=true) -->
-<!-- 	private String code; -->
-	
-<!-- 	private String nombre; -->
-<!-- 	private String descripcion; -->
-<!-- 	private String urlimg; -->
-<!-- 	private Integer cantidad; -->
-<!-- 	private Double precio; -->
-	
-<!-- 	@ManyToOne (cascade = { CascadeType.ALL }) -->
-<!-- 	private Categoria categoria; -->

@@ -26,13 +26,13 @@ public class Producto {
 	
 	public Producto(){}
 
-	public Producto(String nombre,String code, String urlimg, String descripcion, Integer cantidad, Double d) {
+	public Producto(String nombre,String code, String urlimg, String descripcion, Integer cantidad, Double precio) {
 		this.nombre = nombre;
 		this.code = code;
 		this.urlimg = urlimg;
 		this.descripcion = descripcion;
 		this.cantidad = cantidad;
-		this.precio = d;
+		this.precio = precio;
 	}
 
 	public Long getId() {

@@ -1,4 +1,4 @@
-<div class="modal fade" id="modalAgregar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalAgregar" tabindex="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header text-center">
@@ -42,7 +42,7 @@
 			    <select name="categoria" id="categoria" class="browser-default custom-select mb-4">
             		<option value="0">Categoria</option>
 	            	<c:forEach items="${categorias}" var="categoria">
-	            		<option value="${categoria.id}">${categoria.nombre} </option>
+	            		<option value="${categoria.nombre}">${categoria.nombre} </option>
 	           		</c:forEach>
 				</select>
 		       <div class="md-form">
@@ -52,7 +52,7 @@
 
 		      </div>
 		      <div class="modal-footer d-flex justify-content-center">
-		      	<button class="btn btn-default" class="close" data-dismiss="modal">Cancelar</button>
+		      	<button class="btn btn-default" data-dismiss="modal">Cancelar</button>
 		        <button type="button" class="btn btn-default" id="btnAddProducto">Agregar</button>
 		      </div>
 	      </form>

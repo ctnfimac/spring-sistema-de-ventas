@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.christian.models.Categoria;
@@ -21,6 +22,11 @@ public class ProductoDaoImpl implements ProductoDao {
 	@Override
 	public void agregarProducto(Producto producto) {
 		final Session session = sessionFactory.getCurrentSession();
+		
+		Categoria categoria = (Categoria) session.createCriteria(Categoria.class)
+				.add(Restrictions.eq("nombre", producto.getCategoria().getNombre()))
+				.uniqueResult();
+		producto.setCategoria(categoria);
 		session.save(producto);
 	}
 

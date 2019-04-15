@@ -21,27 +21,12 @@
                  <th>Operacion<th>
                </tr>
              </thead>
-             <tbody>
-				<c:forEach var="producto" items="${productos}">
-				 <td class="align-middle justify-content-center"><img src="${producto.getUrlimg()}" width=125></td>
-            	 <td class="align-middle">${producto.getId()}</td>
-                 <th scope="row" class="align-middle">${producto.getCode()}</th>
-                 <td class="align-middle">${producto.getNombre()}</td>
-                 <td class="align-middle">${producto.getDescripcion()}</td>
-                 <td class="align-middle">${producto.getCantidad()}</td>
-                 <td class="align-middle">$${producto.getPrecio()}</td>
-                 <td class="align-middle">${producto.getCategoria().getNombre()}</td>
-                 <td class="align-middle m-0">
-                 	<div class="btn-group" role="group">
-                 		<button type="button" value="${producto.getId()}" class="btn btn-danger btn-sm eventStateDelete"><i class="fas fa-trash-alt"></i></button>		                 		
-						<button type="button" value="${producto.getId()}" class="btn btn-warning btn-sm eventEstado"><i class="fas fa-pencil-alt"></i></button>
-                 	</div>
-                 </td>
-	               </tr>
-             	</c:forEach>
+             <tbody id="resultadoDeMostrarProductos">
              </tbody>
            </table>
           </div>
         </div>
       </div>
     </div>
+    
+<h2 id="resultadoDeMostrarProductos"></h2>

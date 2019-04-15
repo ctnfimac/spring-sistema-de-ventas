@@ -38,18 +38,10 @@ public class AdminController {
 	
 	@RequestMapping(path="/productos")
 	public ModelAndView irAproductos(){
-		ModelMap modelo = new ModelMap();
-		List<Producto> productos = null;
-		productos = productoService.getProductos();
-		
+		ModelMap modelo = new ModelMap();	
 		List<Categoria> categorias = null;
 		categorias = productoService.getCategorias();
-		
-		CProducto cproducto = new CProducto();
-		
-		modelo.put("productos", productos);
 		modelo.put("categorias", categorias);
-		modelo.put("cproducto", cproducto);
 		return new ModelAndView("productos",modelo);
 	}
 	

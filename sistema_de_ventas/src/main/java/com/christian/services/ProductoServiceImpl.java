@@ -14,7 +14,7 @@ import com.christian.models.Producto;
 @Service("ProductoService")
 @Transactional
 public class ProductoServiceImpl implements ProductoService{
-
+	
 	@Inject
 	private ProductoDao productoDao;
 	
@@ -59,6 +59,11 @@ public class ProductoServiceImpl implements ProductoService{
 	@Override
 	public List<Categoria> getCategorias() {
 		return productoDao.getCategorias();
+	}
+
+	@Override
+	public List<Producto> paginacion(Integer from, Integer quantity) {
+		return productoDao.paginacion(from, quantity);
 	}
 
 }

@@ -14,4 +14,5 @@ public interface ProductoService {
 	Integer cantidadDeProductos();
 	List<Producto> getProductos();
 	List<Categoria> getCategorias();
+	List<Producto> paginacion(Integer from, Integer quantity);
 }

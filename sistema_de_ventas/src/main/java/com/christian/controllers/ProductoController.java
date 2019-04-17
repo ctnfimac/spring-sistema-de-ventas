@@ -9,12 +9,16 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.christian.clases.CProducto;
 import com.christian.clases.Ruta;
@@ -28,9 +32,20 @@ import com.google.gson.Gson;
 @Controller
 public class ProductoController {
 	
+	private final Integer NPRODUCTOS = 2;
+	
 	@Inject
 	private ProductoService productoService;
 	
+	
+	@RequestMapping(path="/productos")
+	public ModelAndView irAproductos(){
+		ModelMap modelo = new ModelMap();	
+		List<Categoria> categorias = null;
+		categorias = productoService.getCategorias();
+		modelo.put("categorias", categorias);
+		return new ModelAndView("productos",modelo);
+	}
 	
 	@ResponseBody
 	@RequestMapping(path="/recibeProducto", method = RequestMethod.POST)
@@ -66,9 +81,30 @@ public class ProductoController {
 	@RequestMapping(path="muestraProductos", method= RequestMethod.POST)
 	public String muestraProductos(){
 		Gson gson = new Gson();
-		List<Producto> productosActualizados = productoService.getProductos();
+		List<Producto> productosActualizados = productoService.paginacion(0, NPRODUCTOS);//productoService.getProductos();
 		String JSON = gson.toJson(productosActualizados);
 		return JSON;
 	}
+	
+	@ResponseBody
+	@RequestMapping(path="paginacion", method= RequestMethod.POST)
+	public String paginacionDeProductos(){
+		JSONObject json = new JSONObject();
+		Integer cantidadTotal = productoService.getProductos().size();
+		json.put("total", cantidadTotal);
+		json.put("productosAmostrar", NPRODUCTOS);
+		return json.toJSONString();
+	}
+	
+	
+//	@RequestMapping(path="/paginacion/{from}", method= RequestMethod.GET)
+//	public ModelAndView paginacion(@PathVariable Integer from){
+//		List<Producto> productos = productoService.paginacion(from, NPRODUCTOS);
+//		
+//		for(Producto producto : productos){
+//			System.out.println("nombre: " + producto.getNombre());
+//		}
+//		return new ModelAndView("productos");
+//	}
 	
 }

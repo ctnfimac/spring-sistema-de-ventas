@@ -73,15 +73,22 @@ public class ProductoDaoImpl implements ProductoDao {
 				"The Xbee shield allows an Arduino board to communicate wirelessly using Zigbee.", 
 				14, 
 				28.90);
-		
+		Producto producto4 = new Producto("Arduino Ethernet Shield 2",
+				"A000024",
+				"./img/productos/ArduinoEthernetShield2.jpg",
+				"Connects your Arduino to the internet in mere minutes. controlling your world through the internet", 
+				10, 
+				23.65);
 		
 		producto1.setCategoria(categoria1);
 		producto2.setCategoria(categoria1);
 		producto3.setCategoria(categoria2);
+		producto4.setCategoria(categoria2);
 		
 		session.save(producto1);
 		session.save(producto2);
 		session.save(producto3);
+		session.save(producto4);
 	}
 
 	@Override
@@ -108,6 +115,18 @@ public class ProductoDaoImpl implements ProductoDao {
 		categorias = session.createCriteria(Categoria.class)
 				.list();
 		return categorias;
+	}
+
+	@Override
+	public List<Producto> paginacion(Integer from, Integer quantity) {
+		final Session session = sessionFactory.getCurrentSession();
+		List<Producto> productosAmostrar = null;
+		productosAmostrar = session.createCriteria(Producto.class)
+				.setFirstResult(from)
+//				.setFetchSize(quantity)
+				.setMaxResults(quantity)
+				.list();
+		return productosAmostrar;
 	}
 
 }

@@ -36,15 +36,6 @@ public class AdminController {
 		return new ModelAndView("admin",modelo);
 	}
 	
-	@RequestMapping(path="/productos")
-	public ModelAndView irAproductos(){
-		ModelMap modelo = new ModelMap();	
-		List<Categoria> categorias = null;
-		categorias = productoService.getCategorias();
-		modelo.put("categorias", categorias);
-		return new ModelAndView("productos",modelo);
-	}
-	
 	@RequestMapping(path="/habilitacionDeCliente", method = RequestMethod.GET)
 	public @ResponseBody String habilitacionDeCliente(@RequestParam(value="id") Long id){
 		String result = clienteService.cambiarEstadoPorId(id);

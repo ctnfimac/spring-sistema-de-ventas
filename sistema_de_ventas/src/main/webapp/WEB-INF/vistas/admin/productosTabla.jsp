@@ -28,5 +28,24 @@
         </div>
       </div>
     </div>
+   
+    <div id="paginacionProductos"></div>
+   
+<%--     <c:set var = "paginas" scope = "session" value = "${4}"/> --%>
+<%--     <c:set var = "indice" scope = "session" value = "${1}"/> --%>
+<%--     <c:out value = "${salary}"/> --%>
     
-<h2 id="resultadoDeMostrarProductos"></h2>
+<!--     <nav aria-label="Page navigation example"> -->
+<!-- 	  <ul class="pagination pagination-circle pg-blue justify-content-center"> -->
+<!-- 	    <li class="page-item disabled"> -->
+<!-- 	      <a class="page-link" tabindex="-1">Previous</a> -->
+<!-- 	    </li> -->
+<%-- 		    <li class="page-item active"><a class="page-link">${i}</a></li> --%>
+<!-- 		    <li class="page-item"><a class="page-link">2</a></li> -->
+<!-- 		    <li class="page-item"><a class="page-link">3</a></li>	    -->
+<!-- 	     <li class="page-item">  -->
+<!-- 		    <a class="page-link">Next</a> -->
+<!-- 		 </li> -->
+<!-- 	  </ul> -->
+<!-- 	</nav> -->
+<!-- <h2 id="resultadoDeMostrarProductos"></h2> -->

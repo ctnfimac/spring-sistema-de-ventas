@@ -87,6 +87,25 @@ public class ProductoController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(path="muestraProductos/{indice}", method= RequestMethod.GET)
+	public String muestraProductosEspecificos(@PathVariable Integer indice){
+		Gson gson = new Gson();
+		List<Producto> productosActualizados = productoService.paginacion((indice-1)*NPRODUCTOS, NPRODUCTOS);//productoService.getProductos();
+		String JSON = gson.toJson(productosActualizados);
+		return JSON;
+	}
+	
+//	@ResponseBody
+//	@RequestMapping(path={"muestraProductos","muestraProductos/{indice}"}, method= RequestMethod.POST)
+//	public String muestraProductos(@PathVariable Integer indice){
+//		Gson gson = new Gson();
+//		if(indice == null) indice = 1;
+//		List<Producto> productosActualizados = productoService.paginacion((indice-1)*NPRODUCTOS, NPRODUCTOS);//productoService.getProductos();
+//		String JSON = gson.toJson(productosActualizados);
+//		return JSON;
+//	}
+	
+	@ResponseBody
 	@RequestMapping(path="paginacion", method= RequestMethod.POST)
 	public String paginacionDeProductos(){
 		JSONObject json = new JSONObject();

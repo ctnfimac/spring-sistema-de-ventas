@@ -1,8 +1,6 @@
+const NPRODUCTOS = 2;
 
 $(document).ready(function(){
-	//const NPRODUCTOS = 2; // este valor tambien esta en ProductoController
-	
-	
 	/*
 	 * mostrarProductos()
 	 * recibiendo y mostrando los productos de la base de datos
@@ -19,13 +17,12 @@ $(document).ready(function(){
 	            		cuerpoDeLaTabla += plantillaDeLaTabla(dato);
 	            	});
 	            	$('#resultadoDeMostrarProductos').html(cuerpoDeLaTabla);
-	            	paginacion(productos);
+//	            	paginacionDeProductos()
 	            },
 	            error: function (data) {
 	                console.log(data.id + "error en la petición");
 	            }
 	        });
-		  paginacionDeProductos()
 	}
 	
 	
@@ -48,7 +45,6 @@ $(document).ready(function(){
 	
 	function enviarPorAjax(datos){
 		var data = new FormData();
-		
 		jQuery.each(datos.imagen, function(i, file) {
 		    data.append("file", file);
 		});
@@ -71,16 +67,20 @@ $(document).ready(function(){
             	var cuerpoDeLaTabla;
             	productos.forEach(function(result) {
             		cuerpoDeLaTabla += plantillaDeLaTabla(result);
+            		
             	});
             	setTimeout(
     			  function() 
     			  {
-    				  $('#resultadoDeMostrarProductos').html(cuerpoDeLaTabla);//actualizo la informacion de la tabla
+    				  //$('#resultadoDeMostrarProductos').html(cuerpoDeLaTabla);//actualizo la informacion de la tabla
     				  $('#formAdd')[0].reset();
     			  }, 4000);//para que le de el tiempo al workspace de actualizar la carpeta de imagenes
+            	agregoItemALaPaginacion(productos.length);
+            	//si estoy en la ultima pagina y tengo un producto y estoy mostrando de a dos
+            	//entonces se tiene que actualizar automaticamente! agregar esto
 			}
 		})
-		 
+		
 	}
 
 	
@@ -129,24 +129,88 @@ $(document).ready(function(){
 	 * 
 	 */
 	function paginacion(productos){	
-		var paginas = "<nav aria-label='Page navigation example'>"+
-			"<ul class='pagination pagination-circle pg-blue justify-content-center'>"+
-				"<li class='page-item disabled'>"+
-					"<a class='page-link' tabindex='-1'>Previous</a>"+
-				"</li>";
 		for(var i = 1 ; i <= productos.total / productos.productosAmostrar ; i++){
-			paginas += ( i === 1)? 
-					"<li class='page-item active'><a class='page-link'>"+i+"</a></li>"
-					:
-					"<li class='page-item'><a class='page-link'>"+i+"</a></li>"
+			const fila = document.createElement('li');
+			fila.classList.add("page-item");
+			fila.setAttribute("id", "fila-"+i);
+			if( i === 1) fila.classList.add("active");
+			
+			const button = document.createElement('button');
+			button.classList.add("page-link");
+			button.innerHTML = i;
+			button.setAttribute("value", i);
+			
+			fila.appendChild(button);
+			document.getElementById('paginacionProductos').appendChild(fila);
+			
+			button.onclick = function(e) {
+				  mostrarProductosEspecificos(e);
+			};
 		}
-		
-		paginas += "<li class='page-item'>"+ 
-				   		"<a class='page-link'>Next</a>"+
-				   "</li>"+
-			  "</ul>"+
-			"</nav>";
-		$('#paginacionProductos').html(paginas);
+	}
+	
+	
+	/**
+	 * @details:  muestra solo los productos de cierta pagina
+	 * 
+	 */
+	function mostrarProductosEspecificos(e){
+		var url = 'muestraProductos/'+e.target.value+'.html';
+		$.ajax({
+		    url: url,
+            type: 'GET',	
+            success: function (data) {
+            	var productos = JSON.parse(data);
+            	var cuerpoDeLaTabla;
+            
+            	productos.forEach(function(dato) {
+            		cuerpoDeLaTabla += plantillaDeLaTabla(dato);
+            	});
+            	$('#resultadoDeMostrarProductos').html(cuerpoDeLaTabla);
+            	
+            	//saco la clase active de todos los li
+            	$('#paginacionProductos li').each(function(index,element){        
+            		const indice = index + 1;
+            		$('#fila-'+indice).removeClass("active");
+            	});
+            	
+            	// agrego la clase active al li correspondiente
+            	document.getElementById('fila-'+e.target.value).classList.add("active");
+            },
+            error: function (data) {
+                console.log(data + "error en la peticion");
+            }
+        });
+	}
+	
+	
+	/**
+	 * @details:  cuando agrego un producto nuevo y exedo la cantidad permitida
+	 * 			  por página
+	 * 
+	 */
+	function agregoItemALaPaginacion(index){
+//		console.log('index:' + index)
+//		console.log('p a mostrar:' + productosEspecificos.productosAmostrar)
+		if( NPRODUCTOS == 1 || ( NPRODUCTOS > 1 && index % NPRODUCTOS != 0) ){
+			index = (NPRODUCTOS == 1)? index : Math.round(index / NPRODUCTOS) ;
+			const fila = document.createElement('li');
+			fila.classList.add("page-item");
+			fila.setAttribute("id", "fila-"+index);
+//			if( i === 1) fila.classList.add("active");
+			
+			const button = document.createElement('button');
+			button.classList.add("page-link");
+			button.innerHTML = index;
+			button.setAttribute("value", index);
+			
+			fila.appendChild(button);
+			document.getElementById('paginacionProductos').appendChild(fila);
+			
+			button.onclick = function(e) {
+				  mostrarProductosEspecificos(e);
+			}
+		}
 	}
 
 	mostrarProductos();

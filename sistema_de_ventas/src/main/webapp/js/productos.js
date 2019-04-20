@@ -1,4 +1,8 @@
 const NPRODUCTOS = 2;
+paginacionDatos = {
+		"paginaEnLaQueEstoy" : 1//,
+		//"ultimaPagina" : 1
+}
 
 $(document).ready(function(){
 	/*
@@ -45,6 +49,7 @@ $(document).ready(function(){
 	
 	function enviarPorAjax(datos){
 		var data = new FormData();
+		
 		jQuery.each(datos.imagen, function(i, file) {
 		    data.append("file", file);
 		});
@@ -72,21 +77,21 @@ $(document).ready(function(){
             	setTimeout(
     			  function() 
     			  {
-    				  //$('#resultadoDeMostrarProductos').html(cuerpoDeLaTabla);//actualizo la informacion de la tabla
     				  $('#formAdd')[0].reset();
+    				  agregoItemALaPaginacion(productos.length);
     			  }, 4000);//para que le de el tiempo al workspace de actualizar la carpeta de imagenes
-            	agregoItemALaPaginacion(productos.length);
-            	//si estoy en la ultima pagina y tengo un producto y estoy mostrando de a dos
-            	//entonces se tiene que actualizar automaticamente! agregar esto
 			}
 		})
-		
+		// actualizo la pagina en la que me encuentro, con una demora para dar tiempo al guardado en la db
+		setTimeout(function() {
+			mostrarProductosEspecificos( paginacionDatos.paginaEnLaQueEstoy);
+    	}, 2000);
 	}
 
 	
 	function plantillaDeLaTabla(producto){
 		var fila = "<tr>" +
-						"<td class='align-middle justify-content-center'><img src='"+producto.urlimg+"' width=125></td>"+
+						"<td class='align-middle justify-content-center'><img src='"+producto.urlimg+"' width=100 heigth=50></td>"+
 						"<td class='align-middle'>"+producto.id+"</td>" +
 						"<td class='align-middle'>"+producto.code+"</td>" +
 						"<td class='align-middle'>"+producto.nombre+"</td>" +
@@ -116,7 +121,7 @@ $(document).ready(function(){
 	            type: 'POST',	
 	            success: function (data) {
 	            	var productos = JSON.parse(data);
-	            	paginacion(productos)
+	            	paginacion(productos);
 	            },
 	            error: function (data) {
 	                console.log(data.id + "error en la petición");
@@ -129,7 +134,10 @@ $(document).ready(function(){
 	 * 
 	 */
 	function paginacion(productos){	
-		for(var i = 1 ; i <= productos.total / productos.productosAmostrar ; i++){
+		//tener de constante la ultima página
+//		paginacionDatos.ultimaPagina = Math.round( productos.total / productos.productosAmostrar);
+		
+		for(var i = 1 ; i <= Math.round(productos.total / productos.productosAmostrar) ; i++){
 			const fila = document.createElement('li');
 			fila.classList.add("page-item");
 			fila.setAttribute("id", "fila-"+i);
@@ -144,7 +152,7 @@ $(document).ready(function(){
 			document.getElementById('paginacionProductos').appendChild(fila);
 			
 			button.onclick = function(e) {
-				  mostrarProductosEspecificos(e);
+				  mostrarProductosEspecificos(e.target.value);
 			};
 		}
 	}
@@ -155,7 +163,8 @@ $(document).ready(function(){
 	 * 
 	 */
 	function mostrarProductosEspecificos(e){
-		var url = 'muestraProductos/'+e.target.value+'.html';
+		var url = 'muestraProductos/'+e+'.html';
+		paginacionDatos.paginaEnLaQueEstoy = e;
 		$.ajax({
 		    url: url,
             type: 'GET',	
@@ -171,11 +180,11 @@ $(document).ready(function(){
             	//saco la clase active de todos los li
             	$('#paginacionProductos li').each(function(index,element){        
             		const indice = index + 1;
+            		//console.log('indice: '+indice);
             		$('#fila-'+indice).removeClass("active");
-            	});
-            	
+            	});          	
             	// agrego la clase active al li correspondiente
-            	document.getElementById('fila-'+e.target.value).classList.add("active");
+            	document.getElementById('fila-'+e/*.target.value*/).classList.add("active");
             },
             error: function (data) {
                 console.log(data + "error en la peticion");
@@ -190,15 +199,12 @@ $(document).ready(function(){
 	 * 
 	 */
 	function agregoItemALaPaginacion(index){
-//		console.log('index:' + index)
-//		console.log('p a mostrar:' + productosEspecificos.productosAmostrar)
 		if( NPRODUCTOS == 1 || ( NPRODUCTOS > 1 && index % NPRODUCTOS != 0) ){
 			index = (NPRODUCTOS == 1)? index : Math.round(index / NPRODUCTOS) ;
 			const fila = document.createElement('li');
 			fila.classList.add("page-item");
 			fila.setAttribute("id", "fila-"+index);
-//			if( i === 1) fila.classList.add("active");
-			
+	
 			const button = document.createElement('button');
 			button.classList.add("page-link");
 			button.innerHTML = index;
@@ -208,7 +214,7 @@ $(document).ready(function(){
 			document.getElementById('paginacionProductos').appendChild(fila);
 			
 			button.onclick = function(e) {
-				  mostrarProductosEspecificos(e);
+				  mostrarProductosEspecificos(e.target.value);
 			}
 		}
 	}

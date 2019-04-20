@@ -14,39 +14,39 @@
 				    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
 				  </div>
 				  <div class="custom-file">
-				    <input type="file" class="custom-file-input" name="imagen" id="imagen">
+				    <input type="file" class="custom-file-input" name="imagen" id="imagen" required>
 				    <label class="custom-file-label" for="imagen">Choose file</label>
 				  </div>
 				</div>
 		        <div class="md-form mb-5">
-		          <input type="text" id="nombre" name="nombre" class="form-control validate">
+		          <input type="text" id="nombre" name="nombre" class="form-control validate" required>
 		          <label for="nombre">Nombre</label>
 		        </div>
 				 <div class="row">
 				    <div class="col">
 				      <div class="md-form mt-0">
-				        <input type="text" name="code" id="code" class="form-control" placeholder="Code">
+				        <input type="text" name="code" id="code" class="form-control" placeholder="Code" required>
 				      </div>
 				    </div>
 				    <div class="col">
 				      <div class="md-form mt-0">
-				        <input type="number" name="cantidad" id="cantidad" class="form-control" placeholder="Cantidad">
+				        <input type="number" name="cantidad" id="cantidad" class="form-control" placeholder="Cantidad" required>
 				      </div>
 				    </div>
 				    <div class="col">
 				      <div class="md-form mt-0">
-				        <input type="number" name="precio" id="precio" class="form-control" placeholder="Precio">
+				        <input type="number" name="precio" id="precio" class="form-control" placeholder="Precio" required>
 				      </div>
 				    </div>
 			    </div>
-			    <select name="categoria" id="categoria" class="browser-default custom-select mb-4">
+			    <select name="categoria" id="categoria" class="browser-default custom-select mb-4" required>
             		<option value="0">Categoria</option>
 	            	<c:forEach items="${categorias}" var="categoria">
 	            		<option value="${categoria.nombre}">${categoria.nombre} </option>
 	           		</c:forEach>
 				</select>
 		       <div class="md-form">
-				  <textarea id="descripcion" name="descripcion" class="md-textarea form-control" rows="3"></textarea>
+				  <textarea id="descripcion" name="descripcion" class="md-textarea form-control" rows="3" required></textarea>
 				  <label for="descripcion">Descripción</label>
 			   </div> 
 

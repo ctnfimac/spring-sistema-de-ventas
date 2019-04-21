@@ -32,9 +32,9 @@
    
    <nav aria-label='Page navigation example'>
 	  <ul class='pagination pagination-circle pg-blue justify-content-center'>
-		<li class='page-item disabled'><a class='page-link' tabindex='-1'>Previous</a></li>
+		<li class='page-item disabled' id="previous-item"><a class='page-link' tabindex='-1' id="previous">Previous</a></li>
    			<div class="pagination" id="paginacionProductos"></div>
-   		<li class='page-item'> <a class='page-link'>Next</a></li>
+   		<li class='page-item' id="next-item"> <a class='page-link' id="next">Next</a></li>
 	  </ul>
    </nav>
    

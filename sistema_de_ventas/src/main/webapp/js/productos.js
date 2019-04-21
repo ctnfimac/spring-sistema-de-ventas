@@ -1,7 +1,7 @@
 const NPRODUCTOS = 2;
 paginacionDatos = {
-		"paginaEnLaQueEstoy" : 1//,
-		//"ultimaPagina" : 1
+		"paginaEnLaQueEstoy" : 1,
+		"ultimaPagina" : 1
 }
 
 $(document).ready(function(){
@@ -20,6 +20,8 @@ $(document).ready(function(){
 	            	productos.forEach(function(dato) {
 	            		cuerpoDeLaTabla += plantillaDeLaTabla(dato);
 	            	});
+//	            	paginacionDatos.ultimaPagina = Math.round(productos.length);
+//	            	console.log('paginacionDatos.ultimaPagina: ' + paginacionDatos.ultimaPagina);
 	            	$('#resultadoDeMostrarProductos').html(cuerpoDeLaTabla);
 //	            	paginacionDeProductos()
 	            },
@@ -70,6 +72,9 @@ $(document).ready(function(){
 			success: function(result){           	
             	var productos = JSON.parse(result);
             	var cuerpoDeLaTabla;
+            	
+            	paginacionDatos.ultimaPagina = Math.round(productos.length / NPRODUCTOS);
+//            	console.log('paginacionDatos.ultimaPagina: ' + paginacionDatos.ultimaPagina);
             	productos.forEach(function(result) {
             		cuerpoDeLaTabla += plantillaDeLaTabla(result);
             		
@@ -135,8 +140,8 @@ $(document).ready(function(){
 	 */
 	function paginacion(productos){	
 		//tener de constante la ultima página
-//		paginacionDatos.ultimaPagina = Math.round( productos.total / productos.productosAmostrar);
-		
+		paginacionDatos.ultimaPagina = Math.round( productos.total / productos.productosAmostrar);
+//		console.log('paginacionDatos.ultimaPagina: ' + paginacionDatos.ultimaPagina);
 		for(var i = 1 ; i <= Math.round(productos.total / productos.productosAmostrar) ; i++){
 			const fila = document.createElement('li');
 			fila.classList.add("page-item");
@@ -190,6 +195,20 @@ $(document).ready(function(){
                 console.log(data + "error en la peticion");
             }
         });
+		
+		if( paginacionDatos.paginaEnLaQueEstoy > 1 || paginacionDatos.paginaEnLaQueEstoy < paginacionDatos.ultimaPagina){
+    		$("#next-item").removeClass('disabled');
+    		$("#previous-item").removeClass('disabled');
+    	}
+		
+		if( paginacionDatos.paginaEnLaQueEstoy == 1){
+    		$("#previous-item").addClass('disabled');
+    	}
+		
+		if( paginacionDatos.paginaEnLaQueEstoy == paginacionDatos.ultimaPagina){
+    		$("#next-item").addClass('disabled');
+//    		console.log('entro')
+    	}
 	}
 	
 	
@@ -218,6 +237,55 @@ $(document).ready(function(){
 			}
 		}
 	}
+	
+	/*
+	 * Boton siguiente
+	 */
+	$('#next').click(function(e){
+//		console.log('estoy en next')
+//    	console.log('paginacionDatos.ultimaPagina: ' + paginacionDatos.ultimaPagina);
+//    	console.log('paginacionDatos.paginaEnLaQueEstoy: ' + paginacionDatos.paginaEnLaQueEstoy);
+    	if( (paginacionDatos.paginaEnLaQueEstoy < paginacionDatos.ultimaPagina)){
+    		var paginaAmostrar = 0;
+    		paginaAmostrar = parseInt( paginacionDatos.paginaEnLaQueEstoy) + 1;
+//    		console.log(paginaAmostrar)
+    		mostrarProductosEspecificos(paginaAmostrar);
+    		if(paginacionDatos.paginaEnLaQueEstoy != 1)	$("#previous-item").removeClass('disabled');
+    	}
+    	
+//    	if( paginacionDatos.paginaEnLaQueEstoy > 1 || paginacionDatos.paginaEnLaQueEstoy < paginacionDatos.ultimaPagina){
+//    		$("#next-item").removeClass('disabled');
+//    		$("#previous-item").removeClass('disabled');
+//    	}
+    	
+    	
+    	if( paginacionDatos.paginaEnLaQueEstoy == paginacionDatos.ultimaPagina){
+    		$("#next-item").addClass('disabled');
+//    		console.log('entro')
+    	}
+	});
+	
+	/*
+	 * Boton anterior
+	 */
+	$('#previous').click(function(e){
+    	if(paginacionDatos.paginaEnLaQueEstoy > 1){
+    		paginacionDatos.paginaEnLaQueEstoy--;
+    		mostrarProductosEspecificos(paginacionDatos.paginaEnLaQueEstoy);
+    		if(paginacionDatos.paginaEnLaQueEstoy !=  paginacionDatos.ultimaPagina) $("#next-item").removeClass('disabled');
+    	}
+    	
+    	if( paginacionDatos.paginaEnLaQueEstoy > 1 || paginacionDatos.paginaEnLaQueEstoy < paginacionDatos.ultimaPagina){
+    		$("#next-item").removeClass('disabled');
+    		$("#previous-item").removeClass('disabled');
+    	}
+    	
+    	if( paginacionDatos.paginaEnLaQueEstoy == 1){
+    		$("#previous-item").addClass('disabled');
+    	}
+    	
+    	
+	});
 
 	mostrarProductos();
 	paginacionDeProductos();

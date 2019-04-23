@@ -115,6 +115,16 @@ public class ProductoController {
 		return json.toJSONString();
 	}
 	
+	@ResponseBody
+	@RequestMapping(path="eliminarProductoAJax/{id}", method = RequestMethod.GET)
+	public String eliminarProducto(@PathVariable Long id){
+		System.out.println("id: " + id);
+		// elimino  el registro de la ddbb
+		productoService.eliminarProducto(id);
+		
+		// elimino la imagen de la carpeta
+		return "ok";
+	}
 	
 //	@RequestMapping(path="/paginacion/{from}", method= RequestMethod.GET)
 //	public ModelAndView paginacion(@PathVariable Integer from){

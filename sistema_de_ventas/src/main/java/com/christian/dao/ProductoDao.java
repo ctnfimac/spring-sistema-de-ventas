@@ -8,7 +8,7 @@ import com.christian.models.Producto;
 public interface ProductoDao {
 	void cargarProductos();
 	void agregarProducto(Producto producto);
-	void eliminarProducto(Producto producto);
+	void eliminarProducto(Long id);
 	void modificarProducto(Producto productoViejo, Producto productoNuevo);
 	Producto obtenerProducto(Long id);
 	Integer cantidadDeProductos();

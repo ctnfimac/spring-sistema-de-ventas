@@ -31,9 +31,14 @@ public class ProductoDaoImpl implements ProductoDao {
 	}
 
 	@Override
-	public void eliminarProducto(Producto producto) {
-		// TODO Auto-generated method stub
+	public void eliminarProducto(Long id) {
+		final Session session = sessionFactory.getCurrentSession();
+		
+		Producto productoAeliminar = (Producto) session.createCriteria(Producto.class)
+				.add(Restrictions.eq("id", id))
+				.uniqueResult();
 
+		if (productoAeliminar != null) session.delete(productoAeliminar);
 	}
 
 	@Override
@@ -44,8 +49,12 @@ public class ProductoDaoImpl implements ProductoDao {
 
 	@Override
 	public Producto obtenerProducto(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		final Session session = sessionFactory.getCurrentSession();
+		Producto producto = null;
+		producto = (Producto) session.createCriteria(Producto.class)
+			.add(Restrictions.eq("id", id))
+			.uniqueResult();
+		return producto;
 	}
 
 	@Override
@@ -54,6 +63,9 @@ public class ProductoDaoImpl implements ProductoDao {
 		
 		Categoria categoria1 = new Categoria("Boards-Modules");
 		Categoria categoria2 = new Categoria("Shields");
+		
+		session.save(categoria1);
+		session.save(categoria2);
 		
 		Producto producto1 = new Producto("Arduino MKR GSM 1400",
 				"ABX00018-B",

@@ -29,9 +29,8 @@ public class ProductoServiceImpl implements ProductoService{
 	}
 
 	@Override
-	public void eliminarProducto(Producto producto) {
-		// TODO Auto-generated method stub
-		
+	public void eliminarProducto(Long id) {
+		productoDao.eliminarProducto(id);
 	}
 
 	@Override
@@ -42,8 +41,7 @@ public class ProductoServiceImpl implements ProductoService{
 
 	@Override
 	public Producto obtenerProducto(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return productoDao.obtenerProducto(id);
 	}
 
 	@Override

@@ -17,8 +17,9 @@ $(document).ready(function(){
 	            success: function (data) {
 	            	var productos = JSON.parse(data);
 	            	var cuerpoDeLaTabla;
+	            	$("#resultadoDeMostrarProductos" ).empty();
 	            	productos.forEach(function(dato) {
-	            		cuerpoDeLaTabla += plantillaDeLaTabla(dato);
+	            		/*cuerpoDeLaTabla +=*/ plantillaDeLaTabla(dato);
 	            	});
 //	            	paginacionDatos.ultimaPagina = Math.round(productos.length);
 //	            	console.log('paginacionDatos.ultimaPagina: ' + paginacionDatos.ultimaPagina);
@@ -74,11 +75,7 @@ $(document).ready(function(){
             	var cuerpoDeLaTabla;
             	
             	paginacionDatos.ultimaPagina = Math.round(productos.length / NPRODUCTOS);
-//            	console.log('paginacionDatos.ultimaPagina: ' + paginacionDatos.ultimaPagina);
-            	productos.forEach(function(result) {
-            		cuerpoDeLaTabla += plantillaDeLaTabla(result);
             		
-            	});
             	setTimeout(
     			  function() 
     			  {
@@ -88,30 +85,83 @@ $(document).ready(function(){
 			}
 		})
 		// actualizo la pagina en la que me encuentro, con una demora para dar tiempo al guardado en la db
-		setTimeout(function() {
-			mostrarProductosEspecificos( paginacionDatos.paginaEnLaQueEstoy);
-    	}, 2000);
+		if(paginacionDatos.ultimaPagina == paginacionDatos.paginaEnLaQueEstoy){
+			setTimeout(function() {
+				$("#resultadoDeMostrarProductos" ).empty();
+				mostrarProductosEspecificos( paginacionDatos.paginaEnLaQueEstoy);
+	    	}, 1500);
+		}
 	}
 
 	
 	function plantillaDeLaTabla(producto){
-		var fila = "<tr>" +
-						"<td class='align-middle justify-content-center'><img src='"+producto.urlimg+"' width=100 heigth=50></td>"+
-						"<td class='align-middle'>"+producto.id+"</td>" +
-						"<td class='align-middle'>"+producto.code+"</td>" +
-						"<td class='align-middle'>"+producto.nombre+"</td>" +
-						"<td class='align-middle'>"+producto.descripcion+"</td>" +
-						"<td class='align-middle'>"+producto.cantidad+"</td>" +
-						"<td class='align-middle'>"+producto.precio+"</td>" +
-						"<td class='align-middle'>"+producto.categoria.nombre+"</td>" +
-						"<td class='align-middle m-0'>"+
-				         	"<div class='btn-group' role='group'>"+
-				         		"<button type='button' value='"+producto.id+"' class='btn btn-danger btn-sm eventStateDelete'><i class='fas fa-trash-alt'></i></button>"+		                 		
-								"<button type='button' value='"+producto.id+"' class='btn btn-warning btn-sm eventEstado'><i class='fas fa-pencil-alt'></i></button>"+
-				         	"</div>"+
-				        "</td>"+
-					"</tr>";
-		return fila;
+		const renglon = document.createElement('tr');
+		renglon.classList.add('row-producto');
+		
+		const urlimg = document.createElement('td');
+		urlimg.classList.add('align-middle');
+		urlimg.classList.add('justify-content-center');
+		const img = document.createElement('img');
+		img.setAttribute("src",producto.urlimg);
+		img.setAttribute("width",100);
+		img.setAttribute("heighth",50);
+		urlimg.appendChild(img);
+		
+		const id = document.createElement('td');
+		id.classList.add('align-middle');
+		id.innerHTML  = producto.id;
+		
+		const code = document.createElement('td');
+		code.classList.add('align-middle');
+		code.innerHTML  = producto.code;
+		
+		const nombre = document.createElement('td');
+		nombre.classList.add('align-middle');
+		nombre.innerHTML  = producto.nombre;
+		
+		const descripcion = document.createElement('td');
+		descripcion.classList.add('align-middle');
+		descripcion.innerHTML  = producto.descripcion;
+		
+		const cantidad = document.createElement('td');
+		cantidad.classList.add('align-middle');
+		cantidad.innerHTML  = producto.cantidad;
+		
+		const precio = document.createElement('td');
+		precio.classList.add('align-middle');
+		precio.innerHTML  = producto.precio;
+		
+		const categoria = document.createElement('td');
+		categoria.classList.add('align-middle');
+		categoria.innerHTML  = producto.categoria.nombre;
+		
+		const operacion = document.createElement('td');
+		operacion.classList.add('align-middle','m-0');
+		const btnContainer = document.createElement('div');
+		btnContainer.classList.add('btn-group');
+		btnContainer.setAttribute('role','group');
+		const btnDelete = document.createElement('button');
+		btnDelete.classList.add('btn','btn-danger', 'rounded','p-2','mb-0','btn-sm','eventStateDelete', 'btn-el','fas', 'fa-trash-alt');
+		btnDelete.setAttribute('type','button');
+		btnDelete.setAttribute('value',producto.id);		
+		
+		btnDelete.onclick = function(e) {
+			  eliminarProducto(e);
+		}
+		
+		btnContainer.appendChild(btnDelete);
+		operacion.appendChild(btnContainer);
+		
+		renglon.appendChild(urlimg);
+		renglon.appendChild(id);
+		renglon.appendChild(code);
+		renglon.appendChild(nombre);
+		renglon.appendChild(descripcion);
+		renglon.appendChild(cantidad);
+		renglon.appendChild(precio);
+		renglon.appendChild(categoria);
+		renglon.appendChild(operacion);
+		document.getElementById('resultadoDeMostrarProductos').appendChild(renglon);
 	 }
 	
 	/**
@@ -177,10 +227,10 @@ $(document).ready(function(){
             	var productos = JSON.parse(data);
             	var cuerpoDeLaTabla;
             
+            	$("#resultadoDeMostrarProductos" ).empty();;
             	productos.forEach(function(dato) {
-            		cuerpoDeLaTabla += plantillaDeLaTabla(dato);
+            		 plantillaDeLaTabla(dato);
             	});
-            	$('#resultadoDeMostrarProductos').html(cuerpoDeLaTabla);
             	
             	//saco la clase active de todos los li
             	$('#paginacionProductos li').each(function(index,element){        
@@ -242,26 +292,16 @@ $(document).ready(function(){
 	 * Boton siguiente
 	 */
 	$('#next').click(function(e){
-//		console.log('estoy en next')
-//    	console.log('paginacionDatos.ultimaPagina: ' + paginacionDatos.ultimaPagina);
-//    	console.log('paginacionDatos.paginaEnLaQueEstoy: ' + paginacionDatos.paginaEnLaQueEstoy);
     	if( (paginacionDatos.paginaEnLaQueEstoy < paginacionDatos.ultimaPagina)){
     		var paginaAmostrar = 0;
     		paginaAmostrar = parseInt( paginacionDatos.paginaEnLaQueEstoy) + 1;
-//    		console.log(paginaAmostrar)
     		mostrarProductosEspecificos(paginaAmostrar);
     		if(paginacionDatos.paginaEnLaQueEstoy != 1)	$("#previous-item").removeClass('disabled');
     	}
     	
-//    	if( paginacionDatos.paginaEnLaQueEstoy > 1 || paginacionDatos.paginaEnLaQueEstoy < paginacionDatos.ultimaPagina){
-//    		$("#next-item").removeClass('disabled');
-//    		$("#previous-item").removeClass('disabled');
-//    	}
-    	
     	
     	if( paginacionDatos.paginaEnLaQueEstoy == paginacionDatos.ultimaPagina){
     		$("#next-item").addClass('disabled');
-//    		console.log('entro')
     	}
 	});
 	
@@ -286,7 +326,25 @@ $(document).ready(function(){
     	
     	
 	});
-
+	
+	/*
+	 * Boton eliminar
+	 */
+	function eliminarProducto(e){
+		var url = 'eliminarProductoAJax/'+e.target.value+'.html';
+		$.ajax({
+		    url: url,
+            type: 'GET',	
+            success: function (data) {
+//            	var productos = JSON.parse(data);
+            	console.log('eliminando producto con id: ' + data);
+            },
+            error: function (data) {
+                console.log("error en la peticion");
+            }
+        });
+		console.log('dato: ' + e.target.value)
+	}
 	mostrarProductos();
 	paginacionDeProductos();
 })

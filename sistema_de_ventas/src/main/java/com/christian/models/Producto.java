@@ -21,8 +21,10 @@ public class Producto {
 	private Integer cantidad;
 	private Double precio;
 	
-	@ManyToOne (cascade = { CascadeType.ALL })
-	private Categoria categoria;
+	@ManyToOne(cascade = { CascadeType.PERSIST}) // estaba en ALL en vez de persis pero tenia error cuando queria eliminar un producto por su
+	private Categoria categoria;				 // vinculo con la categoria, revizar que al guardar los productos antes tenia que persistir 
+												 // las categorias
+	
 	
 	public Producto(){}
 

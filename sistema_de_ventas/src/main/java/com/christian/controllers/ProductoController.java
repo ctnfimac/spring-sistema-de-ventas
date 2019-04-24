@@ -91,6 +91,23 @@ public class ProductoController {
 	public String muestraProductosEspecificos(@PathVariable Integer indice){
 		Gson gson = new Gson();
 		List<Producto> productosActualizados = productoService.paginacion((indice-1)*NPRODUCTOS, NPRODUCTOS);//productoService.getProductos();
+		
+		
+//		// 2) si hay algun producto verifico si hay alguno en la paginación existente 
+//		productos = productoService.paginacion((indice-1)*NPRODUCTOS, NPRODUCTOS);
+//		//    si es asi retorno ese/esos producto/s
+//		if(productos == null){
+//			// 3) si no hay ninguno y el indice es 1 entonces voy al indice 2
+//			if(indice == 1){
+//				indice++;
+//				productos = productoService.paginacion((indice-1)*NPRODUCTOS, NPRODUCTOS);
+//				if(productos != null) JSON = gson.toJson(productos);
+//			}else{// 4) si el indice es distinto de 1 pruebo con un indice menor
+//				indice--;
+//				productos = productoService.paginacion((indice-1)*NPRODUCTOS, NPRODUCTOS);
+//				if(productos != null) JSON = gson.toJson(productos);
+//			}
+		
 		String JSON = gson.toJson(productosActualizados);
 		return JSON;
 	}
@@ -116,24 +133,45 @@ public class ProductoController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(path="eliminarProductoAJax/{id}", method = RequestMethod.GET)
-	public String eliminarProducto(@PathVariable Long id){
-		System.out.println("id: " + id);
-		// elimino  el registro de la ddbb
-		productoService.eliminarProducto(id);
+	@RequestMapping(path="eliminarProductoAJax/{id}/{indicePaginaActual}", method = RequestMethod.GET)
+	public String eliminarProducto(@PathVariable Long id, @PathVariable Integer indicePaginaActual){
+		JSONObject json = new JSONObject();
+		
+		System.out.println("pagina actual:" + indicePaginaActual);
 		
 		// elimino la imagen de la carpeta
-		return "ok";
-	}
+		Producto producto = productoService.obtenerProducto(id);
+		String urlimg = producto.getUrlimg();
+		
+		String nameimg =urlimg.replace("./img/productos", "");
+		urlimg = Ruta.PRODUCTOS + nameimg;
 	
-//	@RequestMapping(path="/paginacion/{from}", method= RequestMethod.GET)
-//	public ModelAndView paginacion(@PathVariable Integer from){
-//		List<Producto> productos = productoService.paginacion(from, NPRODUCTOS);
-//		
-//		for(Producto producto : productos){
-//			System.out.println("nombre: " + producto.getNombre());
-//		}
-//		return new ModelAndView("productos");
-//	}
+		
+		File imagenAeliminar = new File(urlimg);
+		if(imagenAeliminar != null)imagenAeliminar.delete();
+		
+		// elimino  el producto de la tabla producto
+		productoService.eliminarProducto(id);
+		
+		// verifico si hay o no productos en la tabla
+		List<Producto> productos = productoService.getProductos();
+
+		if(productos.size()!=0){
+			json.put("respuesta", "novacio");
+			List<Producto> productosDeLaPaginacionActual = productoService.paginacion((indicePaginaActual-1)*NPRODUCTOS, NPRODUCTOS);
+			if(productosDeLaPaginacionActual.size() == 0){
+				if(indicePaginaActual == 1)	indicePaginaActual = 2;
+				else indicePaginaActual--;
+				//json.put("indicePaginaActual", indicePaginaActual);
+			}//else{
+				
+			//}
+			json.put("indicePaginaActual", indicePaginaActual);
+			
+		}else	json.put("respuesta", "vacio");
+		
+		return json.toJSONString();
+	}
+
 	
 }

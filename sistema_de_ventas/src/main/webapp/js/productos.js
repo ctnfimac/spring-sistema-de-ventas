@@ -80,8 +80,8 @@ $(document).ready(function(){
     			  function() 
     			  {
     				  $('#formAdd')[0].reset();
-    				  agregoItemALaPaginacion(productos.length);
     			  }, 4000);//para que le de el tiempo al workspace de actualizar la carpeta de imagenes
+            	agregoItemALaPaginacion(productos.length);
 			}
 		})
 		// actualizo la pagina en la que me encuentro, con una demora para dar tiempo al guardado en la db
@@ -89,7 +89,7 @@ $(document).ready(function(){
 			setTimeout(function() {
 				$("#resultadoDeMostrarProductos" ).empty();
 				mostrarProductosEspecificos( paginacionDatos.paginaEnLaQueEstoy);
-	    	}, 1500);
+	    	}, 2500);
 		}
 	}
 
@@ -196,7 +196,8 @@ $(document).ready(function(){
 			const fila = document.createElement('li');
 			fila.classList.add("page-item");
 			fila.setAttribute("id", "fila-"+i);
-			if( i === 1) fila.classList.add("active");
+			//if( i === 1)
+			if( i === paginacionDatos.paginaEnLaQueEstoy) fila.classList.add("active");
 			
 			const button = document.createElement('button');
 			button.classList.add("page-link");
@@ -224,22 +225,23 @@ $(document).ready(function(){
 		    url: url,
             type: 'GET',	
             success: function (data) {
-            	var productos = JSON.parse(data);
-            	var cuerpoDeLaTabla;
-            
-            	$("#resultadoDeMostrarProductos" ).empty();;
-            	productos.forEach(function(dato) {
-            		 plantillaDeLaTabla(dato);
-            	});
-            	
-            	//saco la clase active de todos los li
-            	$('#paginacionProductos li').each(function(index,element){        
-            		const indice = index + 1;
-            		//console.log('indice: '+indice);
-            		$('#fila-'+indice).removeClass("active");
-            	});          	
-            	// agrego la clase active al li correspondiente
-            	document.getElementById('fila-'+e/*.target.value*/).classList.add("active");
+	            	var productos = JSON.parse(data);
+	            	var cuerpoDeLaTabla;
+	            
+	            	$("#resultadoDeMostrarProductos" ).empty();
+	            	productos.forEach(function(dato) {
+	            		 plantillaDeLaTabla(dato);
+	            	});
+	            	
+	            	//saco la clase active de todos los li
+	            	$('#paginacionProductos li').each(function(index,element){        
+	            		const indice = index + 1;
+	            		//console.log('indice: '+indice);
+	            		$('#fila-'+indice).removeClass("active");
+	            	});          	
+	            	// agrego la clase active al li correspondiente
+	            	if( document.getElementById('fila-'+e)!== null) // hago esto por que me tiraba un error que no logre corregir
+	            		document.getElementById('fila-'+e).classList.add("active");
             },
             error: function (data) {
                 console.log(data + "error en la peticion");
@@ -297,9 +299,7 @@ $(document).ready(function(){
     		paginaAmostrar = parseInt( paginacionDatos.paginaEnLaQueEstoy) + 1;
     		mostrarProductosEspecificos(paginaAmostrar);
     		if(paginacionDatos.paginaEnLaQueEstoy != 1)	$("#previous-item").removeClass('disabled');
-    	}
-    	
-    	
+    	} 	
     	if( paginacionDatos.paginaEnLaQueEstoy == paginacionDatos.ultimaPagina){
     		$("#next-item").addClass('disabled');
     	}
@@ -323,27 +323,38 @@ $(document).ready(function(){
     	if( paginacionDatos.paginaEnLaQueEstoy == 1){
     		$("#previous-item").addClass('disabled');
     	}
-    	
-    	
 	});
 	
 	/*
 	 * Boton eliminar
 	 */
 	function eliminarProducto(e){
-		var url = 'eliminarProductoAJax/'+e.target.value+'.html';
+		var pagina = paginacionDatos.paginaEnLaQueEstoy;
+		var url = 'eliminarProductoAJax/'+e.target.value+'/'+paginacionDatos.paginaEnLaQueEstoy+'.html';
 		$.ajax({
 		    url: url,
             type: 'GET',	
-            success: function (data) {
-//            	var productos = JSON.parse(data);
-            	console.log('eliminando producto con id: ' + data);
+            success: function (response) {
+            	var data = JSON.parse(response);
+            	if(data.respuesta === "vacio"){
+            		$("#resultadoDeMostrarProductos" ).empty();
+            		$('#paginacionProductos').empty();	
+            	}else{
+            		pagina = data.indicePaginaActual;
+            	}
+            	
             },
             error: function (data) {
                 console.log("error en la peticion");
             }
         });
-		console.log('dato: ' + e.target.value)
+		paginacionDatos.paginaEnLaQueEstoy = pagina;
+		setTimeout(function() {
+			$("#resultadoDeMostrarProductos" ).empty();
+			mostrarProductosEspecificos( pagina );
+			$('#paginacionProductos').empty();	
+			paginacionDeProductos();
+    	}, 1500);
 	}
 	mostrarProductos();
 	paginacionDeProductos();

@@ -73,9 +73,7 @@ $(document).ready(function(){
 			success: function(result){           	
             	var productos = JSON.parse(result);
             	var cuerpoDeLaTabla;
-            	
             	paginacionDatos.ultimaPagina = Math.round(productos.length / NPRODUCTOS);
-            		
             	setTimeout(
     			  function() 
     			  {
@@ -84,12 +82,16 @@ $(document).ready(function(){
             	agregoItemALaPaginacion(productos.length);
 			}
 		})
+		
+		// esta linea es en el caso que estoy agregando producto y estaba la tabla vacia cosa que refresque la tabla
+		paginacionDatos.ultimaPagina = (paginacionDatos.ultimaPagina == 0) ? 1 : paginacionDatos.ultimaPagina;
+
 		// actualizo la pagina en la que me encuentro, con una demora para dar tiempo al guardado en la db
 		if(paginacionDatos.ultimaPagina == paginacionDatos.paginaEnLaQueEstoy){
 			setTimeout(function() {
 				$("#resultadoDeMostrarProductos" ).empty();
 				mostrarProductosEspecificos( paginacionDatos.paginaEnLaQueEstoy);
-	    	}, 2500);
+	    	}, 4000);
 		}
 	}
 
@@ -348,13 +350,13 @@ $(document).ready(function(){
                 console.log("error en la peticion");
             }
         });
-		paginacionDatos.paginaEnLaQueEstoy = pagina;
+		paginacionDatos.paginaEnLaQueEstoy = pagina == 0 ? 1 : pagina ;
 		setTimeout(function() {
 			$("#resultadoDeMostrarProductos" ).empty();
 			mostrarProductosEspecificos( pagina );
 			$('#paginacionProductos').empty();	
 			paginacionDeProductos();
-    	}, 1500);
+    	}, 1000);
 	}
 	mostrarProductos();
 	paginacionDeProductos();

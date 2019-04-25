@@ -67,11 +67,9 @@ public class ProductoController {
 				 pathImg, producto.getDescripcion(),
 				 producto.getCantidad(), producto.getPrecio());
 		 productoNuevo.setCategoria(new Categoria(producto.getCategoria()));
-		 
 		 productoService.agregarProducto(productoNuevo);
 		 
 		 List<Producto> productosActualizados = productoService.getProductos();
-
 		 Gson gson = new Gson();
 		 String JSON = gson.toJson(productosActualizados);
 		 return JSON;
@@ -91,36 +89,10 @@ public class ProductoController {
 	public String muestraProductosEspecificos(@PathVariable Integer indice){
 		Gson gson = new Gson();
 		List<Producto> productosActualizados = productoService.paginacion((indice-1)*NPRODUCTOS, NPRODUCTOS);//productoService.getProductos();
-		
-		
-//		// 2) si hay algun producto verifico si hay alguno en la paginación existente 
-//		productos = productoService.paginacion((indice-1)*NPRODUCTOS, NPRODUCTOS);
-//		//    si es asi retorno ese/esos producto/s
-//		if(productos == null){
-//			// 3) si no hay ninguno y el indice es 1 entonces voy al indice 2
-//			if(indice == 1){
-//				indice++;
-//				productos = productoService.paginacion((indice-1)*NPRODUCTOS, NPRODUCTOS);
-//				if(productos != null) JSON = gson.toJson(productos);
-//			}else{// 4) si el indice es distinto de 1 pruebo con un indice menor
-//				indice--;
-//				productos = productoService.paginacion((indice-1)*NPRODUCTOS, NPRODUCTOS);
-//				if(productos != null) JSON = gson.toJson(productos);
-//			}
-		
 		String JSON = gson.toJson(productosActualizados);
 		return JSON;
 	}
 	
-//	@ResponseBody
-//	@RequestMapping(path={"muestraProductos","muestraProductos/{indice}"}, method= RequestMethod.POST)
-//	public String muestraProductos(@PathVariable Integer indice){
-//		Gson gson = new Gson();
-//		if(indice == null) indice = 1;
-//		List<Producto> productosActualizados = productoService.paginacion((indice-1)*NPRODUCTOS, NPRODUCTOS);//productoService.getProductos();
-//		String JSON = gson.toJson(productosActualizados);
-//		return JSON;
-//	}
 	
 	@ResponseBody
 	@RequestMapping(path="paginacion", method= RequestMethod.POST)
@@ -162,10 +134,7 @@ public class ProductoController {
 			if(productosDeLaPaginacionActual.size() == 0){
 				if(indicePaginaActual == 1)	indicePaginaActual = 2;
 				else indicePaginaActual--;
-				//json.put("indicePaginaActual", indicePaginaActual);
-			}//else{
-				
-			//}
+			}
 			json.put("indicePaginaActual", indicePaginaActual);
 			
 		}else	json.put("respuesta", "vacio");

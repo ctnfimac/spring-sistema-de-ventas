@@ -19,12 +19,9 @@ $(document).ready(function(){
 	            	var cuerpoDeLaTabla;
 	            	$("#resultadoDeMostrarProductos" ).empty();
 	            	productos.forEach(function(dato) {
-	            		/*cuerpoDeLaTabla +=*/ plantillaDeLaTabla(dato);
+	            		plantillaDeLaTabla(dato);
 	            	});
-//	            	paginacionDatos.ultimaPagina = Math.round(productos.length);
-//	            	console.log('paginacionDatos.ultimaPagina: ' + paginacionDatos.ultimaPagina);
 	            	$('#resultadoDeMostrarProductos').html(cuerpoDeLaTabla);
-//	            	paginacionDeProductos()
 	            },
 	            error: function (data) {
 	                console.log(data.id + "error en la petición");
@@ -38,17 +35,41 @@ $(document).ready(function(){
 	 * 
 	 * */
 	$('#btnAddProducto').click(function(e){
-		var datos = {
-			imagen: jQuery('#imagen')[0].files,
-			nombre: $('#nombre').val(),
-			code: $('#code').val(),
-			cantidad: parseInt($('#cantidad').val()),
-			precio: parseFloat($('#precio').val()), 
-			categoria: $('#categoria').val(),
-			descripcion: $('#descripcion').val()
-		};
-		enviarPorAjax(datos);
+		var validacion = validarFormularioDeProductos();
+		if(validacion){
+			//console.log('validacion correcta')
+			var datos = {
+					imagen: jQuery('#imagen')[0].files,
+					nombre: $('#nombre').val(),
+					code: $('#code').val(),
+					cantidad: parseInt($('#cantidad').val()),
+					precio: parseFloat($('#precio').val()), 
+					categoria: $('#categoria').val(),
+					descripcion: $('#descripcion').val()
+				};
+			enviarPorAjax(datos);
+		}/*else{
+			console.log('error en la validacion')
+		}*/
+		
 	});
+	
+	function validarFormularioDeProductos(){
+		var resultado = true;
+		
+		// verifico que todos los campos esten completos
+		if($('#nombre').val() == "" || $('#code').val() == "" || $('#cantidad').val()== "" ||
+				$('#precio').val()== "" || $('#categoria').val() == "0" || $('#descripcion').val() == "" || 
+				document.getElementById("imagen").files.length == 0){
+			resultado = false;
+			html = '<div class="alert alert-dismissible alert-danger">'  
+			  +'<strong>Error!</strong> <a class="alert-link">Complete todos los campos</a> por favor.' 
+			  +'</div>';
+			document.getElementById('respuestaProducto').innerHTML = html;
+		}	
+		return resultado;
+	}
+	
 	
 	function enviarPorAjax(datos){
 		var data = new FormData();
@@ -74,13 +95,25 @@ $(document).ready(function(){
             	var productos = JSON.parse(result);
             	var cuerpoDeLaTabla;
             	paginacionDatos.ultimaPagina = Math.round(productos.length / NPRODUCTOS);
+            	html = '<div class="alert alert-dismissible alert-success">'  
+					  +'Producto agregado correctamente' 
+					  +'</div>';
+          	document.getElementById('respuestaProducto').innerHTML = html;
             	setTimeout(
     			  function() 
     			  {
     				  $('#formAdd')[0].reset();
+    				  document.getElementById('respuestaProducto').innerHTML = "";
     			  }, 4000);//para que le de el tiempo al workspace de actualizar la carpeta de imagenes
             	agregoItemALaPaginacion(productos.length);
-			}
+            	
+			},
+			error: function (data) {
+				html = '<div class="alert alert-dismissible alert-danger">'  
+					  +'Error al querer guardar el producto' 
+					  +'</div>';
+				document.getElementById('respuestaProducto').innerHTML = html;
+            }
 		})
 		
 		// esta linea es en el caso que estoy agregando producto y estaba la tabla vacia cosa que refresque la tabla

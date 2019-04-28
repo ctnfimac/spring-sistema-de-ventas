@@ -49,13 +49,15 @@
 				  <textarea id="descripcion" name="descripcion" class="md-textarea form-control" rows="3" required></textarea>
 				  <label for="descripcion">Descripción</label>
 			   </div> 
-
+			   <div id="respuestaProducto"></div>
+<!-- 	    	</div> -->
 		      </div>
 		      <div class="modal-footer d-flex justify-content-center">
 		      	<button class="btn btn-default" data-dismiss="modal">Cancelar</button>
 		        <button type="button" class="btn btn-default" id="btnAddProducto">Agregar</button>
 		      </div>
 	      </form>
+     	  
 	    </div>
 	  </div>
 	</div>

@@ -69,10 +69,10 @@ public class ClienteDaoImpl implements ClienteDao{
 		Localidad localidad1 = new Localidad("Villa luzuriaga"),
 				  localidad2 = new Localidad("Liniers");
 		
-		Cliente cliente1 = new Cliente("Tom Y Jerry", "tomyjerry@gmail.com", "tom", "habilitado",
+		Cliente cliente1 = new Cliente("Tom Y Jerry", "tomyjerry@gmail.com", "tom", "enabled",
 										"venezuela", "5500", localidad1);
 		
-		Cliente cliente2 = new Cliente("Dunka", "dunka@gmail.com", "dun", "deshabilitado",
+		Cliente cliente2 = new Cliente("Dunka", "dunka@gmail.com", "dun", "disabled",
 				"las tunas", "11122", localidad2);
 		
 		session.save(localidad1);
@@ -91,8 +91,8 @@ public class ClienteDaoImpl implements ClienteDao{
 		
 		String estadoActual = cliente.getEstado();
 		
-		if(estadoActual.equals("habilitado")) cliente.setEstado("deshabilitado");
-		else cliente.setEstado("habilitado");
+		if(estadoActual.equals("enabled")) cliente.setEstado("disabled");
+		else cliente.setEstado("enabled");
 		
 		session.update(cliente);
 		

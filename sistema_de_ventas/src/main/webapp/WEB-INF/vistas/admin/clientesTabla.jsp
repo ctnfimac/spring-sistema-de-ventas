@@ -1,4 +1,4 @@
- <h2 class="text-center mt-5 mb-3">Tabla de Clientes Registrados</h2>
+ <h2 class="text-center mt-5 mb-3">Clientes Registrados</h2>
   	<div class="col-md-12 mb-4">
        <div class="card">
          <div class="card-body">
@@ -19,7 +19,7 @@
              <tbody>
              	<c:forEach var="cliente" items="${clientes}">
             		 <tr id="cliente${cliente.getId()}">
-		                 <th scope="row class="align-middle"">${cliente.getId()}</th>
+		                 <th scope="row" class="align-middle">${cliente.getId()}</th>
 		                 <td class="align-middle">${cliente.getNombre()}</td>
 		                 <td class="align-middle">${cliente.getEmail()}</td>
 		                 <td class="align-middle">${cliente.getPassword()}</td>
@@ -28,8 +28,13 @@
 		                 <td class="align-middle" id="clienteEstado${cliente.getId()}">${cliente.getEstado()}</td>
 		                 <td class="align-middle m-0">
 		                 	<div class="btn-group" role="group">
-      							<button type="button" value="${cliente.getId()}" class="btn btn-success btn-sm eventEstado">Cambiar Estado</button>
-      							<button type="button" value="${cliente.getId()}" class="btn btn-danger btn-sm eventStateDelete">Delete</button>		                 		
+		                 	<c:if test= "${ cliente.getEstado() == 'disabled'}">
+                 	      			<button type="button" value="${cliente.getId()}" class="btn-habilitacion btn btn-success btn-sm eventEstado">Enable</button>
+		                 	</c:if>
+		                 	<c:if test= "${ cliente.getEstado() == 'enabled'}">
+                 	      			<button type="button" value="${cliente.getId()}" class="btn-habilitacion btn btn-warning btn-sm eventEstado">Disable</button>
+		                 	</c:if>
+      							<button type="button" value="${cliente.getId()}" class="btn btn-danger rounded px-3 mb-0 btn-sm eventStateDelete btn-el fas fa-trash-alt ml-1">	                 		
 		                 	</div>
 		                 </td>
 	               </tr>

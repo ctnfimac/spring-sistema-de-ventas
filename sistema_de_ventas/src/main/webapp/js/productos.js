@@ -11,22 +11,22 @@ $(document).ready(function(){
 	 * 
 	 * */
 	function mostrarProductos(){
-		  $.ajax({
-			    url:'muestraProductos.html',
-	            type: 'POST',	
-	            success: function (data) {
-	            	var productos = JSON.parse(data);
-	            	var cuerpoDeLaTabla;
-	            	$("#resultadoDeMostrarProductos" ).empty();
-	            	productos.forEach(function(dato) {
-	            		plantillaDeLaTabla(dato);
-	            	});
-	            	$('#resultadoDeMostrarProductos').html(cuerpoDeLaTabla);
-	            },
-	            error: function (data) {
-	                console.log(data.id + "error en la petición");
-	            }
-	        });
+	  $.ajax({
+		    url:'muestraProductos.html',
+            type: 'POST',	
+            success: function (data) {
+            	var productos = JSON.parse(data);
+            	var cuerpoDeLaTabla;
+            	$("#resultadoDeMostrarProductos" ).empty();
+            	productos.forEach(function(dato) {
+            		plantillaDeLaTabla(dato);
+            	});
+            	$('#resultadoDeMostrarProductos').html(cuerpoDeLaTabla);
+            },
+            error: function (data) {
+                console.log(data.id + "error en la petición");
+            }
+       });
 	}
 	
 	
@@ -37,7 +37,6 @@ $(document).ready(function(){
 	$('#btnAddProducto').click(function(e){
 		var validacion = validarFormularioDeProductos();
 		if(validacion){
-			//console.log('validacion correcta')
 			var datos = {
 					imagen: jQuery('#imagen')[0].files,
 					nombre: $('#nombre').val(),
@@ -48,10 +47,7 @@ $(document).ready(function(){
 					descripcion: $('#descripcion').val()
 				};
 			enviarPorAjax(datos);
-		}/*else{
-			console.log('error en la validacion')
-		}*/
-		
+		}
 	});
 	
 	function validarFormularioDeProductos(){
@@ -91,22 +87,28 @@ $(document).ready(function(){
 		    contentType: false,
 		    processData: false,
 		    method: 'POST',
-			success: function(result){           	
-            	var productos = JSON.parse(result);
-            	var cuerpoDeLaTabla;
-            	paginacionDatos.ultimaPagina = Math.round(productos.length / NPRODUCTOS);
-            	html = '<div class="alert alert-dismissible alert-success">'  
-					  +'Producto agregado correctamente' 
-					  +'</div>';
-          	document.getElementById('respuestaProducto').innerHTML = html;
-            	setTimeout(
-    			  function() 
-    			  {
-    				  $('#formAdd')[0].reset();
-    				  document.getElementById('respuestaProducto').innerHTML = "";
-    			  }, 4000);//para que le de el tiempo al workspace de actualizar la carpeta de imagenes
-            	agregoItemALaPaginacion(productos.length);
-            	
+			success: function(result){
+				if(result !== "error"){
+	            	var productos = JSON.parse(result);
+	            	var cuerpoDeLaTabla;
+	            	paginacionDatos.ultimaPagina = Math.round(productos.length / NPRODUCTOS);
+	            	html = '<div class="alert alert-dismissible alert-success">'  
+						  +'Producto agregado correctamente' 
+						  +'</div>';
+	            	document.getElementById('respuestaProducto').innerHTML = html;
+	            	setTimeout(
+	    			  function() 
+	    			  {
+	    				  $('#formAdd')[0].reset();
+	    				  document.getElementById('respuestaProducto').innerHTML = "";
+	    			  }, 4000);//para que le de el tiempo al workspace de actualizar la carpeta de imagenes
+	            	agregoItemALaPaginacion(productos.length);
+				}else{
+					html = '<div class="alert alert-dismissible alert-danger">'  
+						  +'<strong>Error!</strong> <a class="alert-link">Complete todos los campos</a> por favor.' 
+						  +'</div>';
+					document.getElementById('respuestaProducto').innerHTML = html;
+				}
 			},
 			error: function (data) {
 				html = '<div class="alert alert-dismissible alert-danger">'  

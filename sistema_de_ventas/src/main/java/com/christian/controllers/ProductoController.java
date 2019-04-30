@@ -50,29 +50,45 @@ public class ProductoController {
 	@ResponseBody
 	@RequestMapping(path="/recibeProducto", method = RequestMethod.POST)
 	public String agregandoProducto(@ModelAttribute("cProducto") CProducto producto) throws IOException{
-		 CommonsMultipartFile file = producto.getFile();
-		 // guardo la imagen en el directorio
-		 File dir = new File(Ruta.PRODUCTOS);
-		 byte[] bytes = file.getBytes();
-		 String name = file.getOriginalFilename();
-		 File serverFile = new File(Ruta.PRODUCTOS + File.separator + name);//pathname:
-		 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-		 stream.write(bytes);
-		 stream.close();
-		 
-		 String pathImg = "./img/productos/" + name;
-
-		 //guardar el producto nuevo en la ddbb
-		 Producto productoNuevo = new Producto(producto.getNombre(),producto.getCode(), 
-				 pathImg, producto.getDescripcion(),
-				 producto.getCantidad(), producto.getPrecio());
-		 productoNuevo.setCategoria(new Categoria(producto.getCategoria()));
-		 productoService.agregarProducto(productoNuevo);
-		 
-		 List<Producto> productosActualizados = productoService.getProductos();
-		 Gson gson = new Gson();
-		 String JSON = gson.toJson(productosActualizados);
+		 String JSON = "error";
+		 if(this.validacionDeFormDeProducto(producto)){
+			 CommonsMultipartFile file = producto.getFile();
+			 // guardo la imagen en el directorio
+			 File dir = new File(Ruta.PRODUCTOS);
+			 byte[] bytes = file.getBytes();
+			 String name = file.getOriginalFilename();
+			 File serverFile = new File(Ruta.PRODUCTOS + File.separator + name);//pathname:
+			 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+			 stream.write(bytes);
+			 stream.close();
+			 
+			 String pathImg = "./img/productos/" + name;
+	
+			 //guardar el producto nuevo en la ddbb
+			 Producto productoNuevo = new Producto(producto.getNombre(),producto.getCode(), 
+					 pathImg, producto.getDescripcion(),
+					 producto.getCantidad(), producto.getPrecio());
+			 productoNuevo.setCategoria(new Categoria(producto.getCategoria()));
+			 productoService.agregarProducto(productoNuevo);
+			 
+			 List<Producto> productosActualizados = productoService.getProductos();
+			 Gson gson = new Gson();
+			 JSON = gson.toJson(productosActualizados);
+		 }
 		 return JSON;
+	}
+	
+	private Boolean validacionDeFormDeProducto(CProducto producto){
+		Boolean resultado = true;
+		try{
+			if(producto.getCode().equals("") || producto.getNombre().equals("") || producto.getDescripcion().toString().equals("") 
+					|| producto.getCantidad().toString().equals("NaN") || producto.getPrecio().toString().equals("NaN") || producto.getCategoria().toString().equals("0")
+					|| producto.getFile().equals(null) )
+				resultado = false;
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+		return resultado;
 	}
 
 	@ResponseBody

@@ -48,6 +48,14 @@
 <!--      		</li> -->
 	
 	    </ul>
+	     <ul class="navbar-nav ml-auto">
+<!-- 	      <li class="nav-item active"> -->
+<!-- 	        <a class="nav-link" href="index">Home -->
+<!-- 	          <span class="sr-only">(current)</span> -->
+<!-- 	        </a> -->
+<!-- 	      </li> -->
+	      <a href="login" type="button" class="btn btn-primary">Login</a>
+	      </ul>
 	    <!-- Links -->
 	
 <!-- 	    <form class="form-inline"> -->

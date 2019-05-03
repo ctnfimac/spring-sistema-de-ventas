@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.christian.models.Admin;
@@ -15,9 +16,14 @@ public class AdminDaoImpl implements AdminDao{
 	private SessionFactory sessionFactory;
 	
 	@Override
-	public Admin getAdmin() {
-		// TODO Auto-generated method stub
-		return null;
+	public Admin getAdmin(String usuario, String password) {
+		Session session = sessionFactory.getCurrentSession();
+		Admin admin = null;
+		admin = (Admin) session.createCriteria(Admin.class)
+				.add(Restrictions.and(Restrictions.eq("usuario", usuario),Restrictions.eq("password",password)))
+				.uniqueResult();
+				
+		return admin;
 	}
 
 	@Override

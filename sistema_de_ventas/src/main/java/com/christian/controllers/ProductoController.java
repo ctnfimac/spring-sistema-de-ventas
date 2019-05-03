@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -39,12 +41,17 @@ public class ProductoController {
 	
 	
 	@RequestMapping(path="/productos")
-	public ModelAndView irAproductos(){
-		ModelMap modelo = new ModelMap();	
-		List<Categoria> categorias = null;
-		categorias = productoService.getCategorias();
-		modelo.put("categorias", categorias);
-		return new ModelAndView("productos",modelo);
+	public ModelAndView irAproductos(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		if(session.getAttribute("admin") != null){
+			ModelMap modelo = new ModelMap();	
+			List<Categoria> categorias = null;
+			categorias = productoService.getCategorias();
+			modelo.put("categorias", categorias);
+			return new ModelAndView("productos",modelo);
+		}else{
+			return new ModelAndView("redirect:login");
+		}
 	}
 	
 	@ResponseBody

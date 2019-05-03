@@ -25,6 +25,17 @@
 <!--               </a> -->
 <!--             </li> -->
 <!--           </ul> -->
+		<ul class="navbar-nav mr-aut">
+			<li class="nav-item dropdown text-white">
+		        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+		          aria-haspopup="true" aria-expanded="false">
+		          <i class="fas fa-user"></i> Profile </a>
+		        <div class="dropdown-menu dropdown-menu-right navbar-dark teal darken-3 dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+<!-- 		          <a class="dropdown-item" href="#">My account</a> -->
+		          <a class="dropdown-item text-white navbar-dark teal darken-3" href="adminSalir">Log out</a>
+		        </div>
+     		</li>
+     		</ul>
         </div>
       </div>
     </nav>

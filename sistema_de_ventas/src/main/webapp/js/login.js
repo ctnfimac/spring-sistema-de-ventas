@@ -17,19 +17,25 @@ $(document).ready(function(){
 			    contentType: false,
 			    processData: false,
 				success: function(response){
-					if(response !== "error"){
-						document.getElementById('respuestaLogin').innerHTML = "<div class='alert alert-dismissible alert-success'>"
-							 + "<strong>Bienvenido! </strong> " + response 
-							 + "</div>";
-						setTimeout(function(){
-							window.location.replace("admin");
-						},2000);
-					}else{
+					
+					if(response === "vacio"){
 						document.getElementById('respuestaLogin').innerHTML = "<div class='alert alert-dismissible alert-danger'>"
-							 + "<strong>Error! </strong> Usuario inexistente"
+							 + "<strong>Error! </strong> Hay campos vacios."
 							 + "</div>";
-					}
-										
+					}else{
+						if(response !== "error"){
+							document.getElementById('respuestaLogin').innerHTML = "<div class='alert alert-dismissible alert-success'>"
+								 + "<strong>Bienvenido! </strong> " + response 
+								 + "</div>";
+							setTimeout(function(){
+								window.location.replace("admin");
+							},2000);
+						}else{
+							document.getElementById('respuestaLogin').innerHTML = "<div class='alert alert-dismissible alert-danger'>"
+								 + "<strong>Error! </strong> Usuario inexistente"
+								 + "</div>";
+						}
+					}					
 				},
 				error: function(e){
 					document.getElementById('respuestaLogin').innerHTML = "<div class='alert alert-dismissible alert-danger'>"

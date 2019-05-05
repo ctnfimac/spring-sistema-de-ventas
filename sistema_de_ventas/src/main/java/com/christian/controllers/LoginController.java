@@ -3,8 +3,10 @@ package com.christian.controllers;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,12 +32,15 @@ public class LoginController {
 	public String verificacionDelLogin(@ModelAttribute("Admin") Admin admin,HttpServletRequest request){
 		String respuesta = "error";
 		
-		Admin administrador = adminService.getAdmin(admin.getUsuario(), admin.getPassword());
-		System.out.println("administrador:" + administrador);
-		if(administrador != null){
-			HttpSession session = request.getSession();
-			respuesta = administrador.getUsuario();
-			session.setAttribute("admin", administrador);	
+		if(admin.getUsuario().equals("") || admin.getPassword().equals("")){
+			respuesta = "vacio";
+		}else{
+			Admin administrador = adminService.getAdmin(admin.getUsuario(), admin.getPassword());
+			if(administrador != null){
+				HttpSession session = request.getSession();
+				respuesta = administrador.getUsuario();
+				session.setAttribute("admin", administrador);	
+			}
 		}
 		return respuesta;
 	}

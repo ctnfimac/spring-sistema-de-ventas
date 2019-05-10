@@ -9,7 +9,7 @@
       </div>
       <div class="modal-body pb-3">
         <form class="text-center px-5">
-			<input name="email" class="form-control mb-4" id="email" type="email" placeholder="E-mail"/>
+			<input name="email" class="form-control mb-4" id="email" type="text" placeholder="E-mail"/>
 			<input name="nombre" class="form-control mb-4" id="nombre" type="text" placeholder="nombre"/>
 			<div class="row">
 			    <div class="col">
@@ -27,12 +27,13 @@
 			  </select>
 			<div class="row">
 			    <div class="col">
-					<input name="password" class="form-control mb-4" type="password" id="password" placeholder="Contraseña"/>
+					<input name="passwordRegistro" class="form-control mb-4" type="password" id="passwordRegistro" placeholder="Contraseña"/>
 			    </div>
 			    <div class="col">
 					<input name="password2" class="form-control mb-4" type="password" id="password2" placeholder="Repetir Contraseña"/>     		      		  
 			    </div>
 			 </div>
+			 <div id="respuestaRegistro"></div>
 			<button class="btn btn-lg btn-success btn-block" Type="button" id="registrarCliente" />Registrar</button>
 		</form>
       </div>

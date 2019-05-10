@@ -3,12 +3,10 @@ $(document).ready(function(){
 	$("#login").click(function(){
 		var usuario = $("#usuario").val();
 		var password = $("#password").val();
-		console.log('usuario: ' + usuario + ', password: ' + password)
 		if(usuario!= "" && password != ""){
 			var data = new FormData();
 			data.append("usuario",usuario);
 			data.append("password",password);
-			console.log(data)
 			$.ajax({
 				url: 'loginVerificacion',
 				method: 'POST',

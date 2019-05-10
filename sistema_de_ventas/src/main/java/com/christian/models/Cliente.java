@@ -13,7 +13,7 @@ public class Cliente extends Usuario{
 	
 	@ManyToOne (cascade={CascadeType.ALL})
 	private Localidad localidad;
-	
+
 	@Transient
 	private String localidadNombre;
 
@@ -48,4 +48,11 @@ public class Cliente extends Usuario{
 		this.localidad = localidad;
 	}
 	
+	public String getLocalidadNombre() {
+		return localidadNombre;
+	}
+
+	public void setLocalidadNombre(String localidadNombre) {
+		this.localidadNombre = localidadNombre;
+	}
 }

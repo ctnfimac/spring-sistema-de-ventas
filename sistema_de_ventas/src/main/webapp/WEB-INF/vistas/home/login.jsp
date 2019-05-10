@@ -21,8 +21,9 @@
 <!-- 				    </div> -->
 				    <!-- Sign in button -->
 				    <div id="respuestaLogin"></div>
-				    <button class="btn btn-info btn-block my-4" type="button" id="login">Sign in</button>
+				    <button class="btn btn-info btn-block mt-4" type="button" id="login">Sign in</button>
 				</form>
+				<p class="text-center mt-0" data-toggle="modal" data-target="#exampleModal">¿No tenés una cuenta?<a href="#"> Registrate</a></p>
 				<!-- Default form login -->
 			</div>
 			<div class="col-xs-12 col-md-7 p-0 overflow-hidden cyan darken-3">

@@ -2,6 +2,7 @@
 <%@include file='overall/nav.jsp' %>	
 
 <%@include file='home/login.jsp' %>
+<%@include file='home/registro.jsp' %>
 
 <%@include file='overall/footer.jsp' %>
 	

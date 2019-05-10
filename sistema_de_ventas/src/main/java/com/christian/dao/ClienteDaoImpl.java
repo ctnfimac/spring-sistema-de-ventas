@@ -99,4 +99,13 @@ public class ClienteDaoImpl implements ClienteDao{
 		return cliente.getEstado();
 	}
 
+	@Override
+	public List<Localidad> obtenerLocalidades() {
+		final Session session = sessionFactory.getCurrentSession();
+		List<Localidad> localidades = null;
+		localidades = session.createCriteria(Localidad.class)
+				.list();
+		return localidades;
+	}
+
 }

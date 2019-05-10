@@ -3,6 +3,7 @@ package com.christian.dao;
 import java.util.List;
 
 import com.christian.models.Cliente;
+import com.christian.models.Localidad;
 
 public interface ClienteDao {
 	List<Cliente> getClientes();
@@ -13,4 +14,5 @@ public interface ClienteDao {
 	void updateCliente(Cliente clienteOld, Cliente clienteNew);
 	void loadClientes();
 	String cambiarEstadoPorId(Long id);
+	List<Localidad> obtenerLocalidades();
 }

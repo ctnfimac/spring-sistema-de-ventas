@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.christian.dao.ClienteDao;
 import com.christian.models.Cliente;
+import com.christian.models.Localidad;
 
 @Service("ClienteService")
 @Transactional
@@ -59,6 +60,11 @@ public class ClienteServiceImpl implements ClienteService {
 	@Override
 	public String cambiarEstadoPorId(Long id) {
 		return clienteDao.cambiarEstadoPorId(id);
+	}
+
+	@Override
+	public List<Localidad> obtenerLocalidades() {
+		return clienteDao.obtenerLocalidades();
 	}
 
 }

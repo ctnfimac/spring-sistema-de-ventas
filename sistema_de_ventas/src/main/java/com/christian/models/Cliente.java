@@ -3,6 +3,7 @@ package com.christian.models;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 
 @Entity
@@ -12,6 +13,9 @@ public class Cliente extends Usuario{
 	
 	@ManyToOne (cascade={CascadeType.ALL})
 	private Localidad localidad;
+	
+	@Transient
+	private String localidadNombre;
 
 	public Cliente(){}
 	

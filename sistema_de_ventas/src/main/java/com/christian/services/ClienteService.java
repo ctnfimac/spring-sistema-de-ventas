@@ -3,6 +3,7 @@ package com.christian.services;
 import java.util.List;
 
 import com.christian.models.Cliente;
+import com.christian.models.Localidad;
 
 public interface ClienteService {
 	List<Cliente> getClientes();
@@ -13,4 +14,5 @@ public interface ClienteService {
 	void updateCliente(Cliente clienteOld, Cliente clienteNew);
 	void loadClientes();
 	String cambiarEstadoPorId(Long id);
+	public List<Localidad> obtenerLocalidades();
 }

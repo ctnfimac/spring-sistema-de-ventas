@@ -8,31 +8,32 @@
         </button>
       </div>
       <div class="modal-body pb-3">
-        <form action="registrar-usuario" class="text-center px-5" method="POST" modelAttribute="">
-			<input path="email" class="form-control mb-4" id="email" type="email" placeholder="E-mail"/>
-			<input path="nombre" class="form-control mb-4" id="nombre" type="text" placeholder="nombre"/>
+        <form class="text-center px-5">
+			<input name="email" class="form-control mb-4" id="email" type="email" placeholder="E-mail"/>
+			<input name="nombre" class="form-control mb-4" id="nombre" type="text" placeholder="nombre"/>
 			<div class="row">
 			    <div class="col">
-					<input path="direccionCalle"  class="form-control mb-4" type="text" id="direccionCalle" placeholder="Calle"/>
+					<input name="direccionCalle" class="form-control mb-4" type="text" id="direccionCalle" placeholder="Calle"/>
 			    </div>
 			    <div class="col">
-					<input path="direccionAltura"  class="form-control mb-4" type="text" id="direccionAltura" placeholder="Altura"/>     		      		  
+					<input name="direccionAltura"  class="form-control mb-4" type="text" id="direccionAltura" placeholder="Altura"/>     		      		  
 			    </div>
 			 </div>
-			  <select path="localidad" id="localidad" class="browser-default custom-select mb-4">
-            	<form:option value="0">Elija Localidad</form:option>
-            		<option value="1">liniers</option>
-            		<option value="2">San justo</option>
+			  <select name="localidadNombre" id="localidadNombre" class="browser-default custom-select mb-4">
+            	<option value="0">Elija Localidad</option>
+            	   <c:forEach items="${localidades}" var="localidad">
+            	   	  <option value="${localidad.nombre}">${localidad.nombre}</option> 
+            	   </c:forEach>
 			  </select>
 			<div class="row">
 			    <div class="col">
-					<input path="password"  class="form-control mb-4" type="password" id="password" placeholder="Contraseña"/>
+					<input name="password" class="form-control mb-4" type="password" id="password" placeholder="Contraseña"/>
 			    </div>
 			    <div class="col">
-					<input path="password2"  class="form-control mb-4" type="password" id="password2" placeholder="Repetir Contraseña"/>     		      		  
+					<input name="password2" class="form-control mb-4" type="password" id="password2" placeholder="Repetir Contraseña"/>     		      		  
 			    </div>
 			 </div>
-			<button class="btn btn-lg btn-success btn-block" Type="Submit"/>Registrar</button>
+			<button class="btn btn-lg btn-success btn-block" Type="button" id="registrarCliente" />Registrar</button>
 		</form>
       </div>
     </div>

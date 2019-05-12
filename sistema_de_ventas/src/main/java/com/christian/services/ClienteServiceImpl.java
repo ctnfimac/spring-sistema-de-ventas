@@ -36,8 +36,7 @@ public class ClienteServiceImpl implements ClienteService {
 
 	@Override
 	public void addCliente(Cliente cliente) {
-		// TODO Auto-generated method stub
-		
+		clienteDao.addCliente(cliente);
 	}
 
 	@Override

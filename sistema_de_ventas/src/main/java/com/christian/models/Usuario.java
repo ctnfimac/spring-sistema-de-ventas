@@ -1,5 +1,6 @@
 package com.christian.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,12 +12,13 @@ public class Usuario{
 	@GeneratedValue
 	private Long id;
 	private String nombre;
+	@Column(unique=true)
 	private String email;
 	private String password;
 	
 	@Transient
 	private String password2;
-	private String estado;
+	private String estado; // enabled - disabled
 	
 	public Usuario(){}
 	

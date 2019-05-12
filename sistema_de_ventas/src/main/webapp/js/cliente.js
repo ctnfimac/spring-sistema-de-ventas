@@ -27,11 +27,31 @@ $(document).ready(function(){
 				cache: false,
 			    contentType: false,
 			    processData: false,
-				success: function(e){
-					console.log(e)
+				success: function(response){
+					var data = JSON.parse(response);
+					switch(data.error){
+						case 0:
+							respuesta(data.respuesta,false);
+							break;
+						case 2:
+							respuesta(data.respuesta,true);
+							break;
+						case 3:
+							respuesta(data.respuesta,true);
+							break;
+						case 4:
+							respuesta(data.respuesta,true);
+							break;
+						case 5:
+							respuesta(data.respuesta,true);
+							break;
+						default:
+							respuesta(data.respuesta,true);
+							break;
+					}
 				},
 				error: function(e){
-					console.log('error registrando')
+					respuesta("Hubo problemas con su registro intente más tarde",true);
 				}
 			})
 		}else if(validacionCorrecta(datos) == 3){

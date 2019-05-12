@@ -37,8 +37,14 @@ public class ClienteDaoImpl implements ClienteDao{
 
 	@Override
 	public void addCliente(Cliente cliente) {
-		// TODO Auto-generated method stub
+		final Session session = sessionFactory.getCurrentSession();
+		cliente.setEstado("enabled");
+		Localidad localidad = (Localidad) session.createCriteria(Localidad.class)
+				.add(Restrictions.eq("nombre",cliente.getLocalidadNombre()))
+				.uniqueResult();
 		
+		cliente.setLocalidad(localidad);	
+		session.save(cliente);
 	}
 
 	@Override

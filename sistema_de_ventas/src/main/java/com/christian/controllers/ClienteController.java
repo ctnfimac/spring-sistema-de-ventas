@@ -4,6 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -24,8 +26,12 @@ public class ClienteController {
 	private ClienteService clienteService;
 	
 	@RequestMapping(path="/cliente", method = RequestMethod.GET)
-	public ModelAndView cliente(){
-		return new ModelAndView("cliente");
+	public ModelAndView cliente(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		if(session.getAttribute("usuarioNombre")!= null){
+			if(session.getAttribute("usuarioRol").equals("user")) return new ModelAndView("cliente");
+			else return new ModelAndView("redirect: login");
+		}else return new ModelAndView("redirect: login");
 	}
 	
 	@RequestMapping(path="/registrarCliente", method = RequestMethod.POST)

@@ -16,6 +16,8 @@ public class Usuario{
 	private String email;
 	private String password;
 	
+	private String rol = "user"; // cliente - repartidor
+	
 	@Transient
 	private String password2;
 	private String estado; // enabled - disabled
@@ -77,4 +79,12 @@ public class Usuario{
 		this.estado = estado;
 	}
 
+	public String getRol() {
+		return rol;
+	}
+
+	public void setRol(String rol) {
+		this.rol = rol;
+	}
+	
 }

@@ -1,37 +1,32 @@
 $(document).ready(function(){
 	
-	$("#login").click(function(){
-		var email = $("#email").val();
+	$("#loginAdmin").click(function(){
+		var usuario = $("#usuario").val();
 		var password = $("#password").val();
-		
-		if(email!= "" && password != ""){
+		if(usuario!= "" && password != ""){
 			var data = new FormData();
-			console.log('email: ' + email)
-			data.append("email",email);
+			data.append("usuario",usuario);
 			data.append("password",password);
-			console.log('data: ' + data.email)
-			console.log('data: ' + data.password)
 			$.ajax({
-				url: 'loginVerificacion',
+				url: 'loginVerificacionAdmin',
 				method: 'POST',
 				data: data,
 				cache: false,
 			    contentType: false,
 			    processData: false,
 				success: function(response){
-					var usuario = JSON.parse(response)
-					console.log('nombre respuesta: ' + usuario.nombre)
-					if(usuario.respuesta === "vacio"){
+					
+					if(response === "vacio"){
 						document.getElementById('respuestaLogin').innerHTML = "<div class='alert alert-dismissible alert-danger'>"
 							 + "<strong>Error! </strong> Hay campos vacios."
 							 + "</div>";
 					}else{
-						if(usuario.respuesta !== "error" && usuario.rol == "user"){
+						if(response !== "error"){
 							document.getElementById('respuestaLogin').innerHTML = "<div class='alert alert-dismissible alert-success'>"
-								 + "<strong>Bienvenido! </strong> " + usuario.nombre 
+								 + "<strong>Bienvenido! </strong> " + response 
 								 + "</div>";
 							setTimeout(function(){
-								window.location.replace("cliente");
+								window.location.replace("admin");
 							},2000);
 						}else{
 							document.getElementById('respuestaLogin').innerHTML = "<div class='alert alert-dismissible alert-danger'>"

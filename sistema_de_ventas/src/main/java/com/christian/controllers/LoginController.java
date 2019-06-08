@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,10 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.christian.models.Admin;
-import com.christian.models.Cliente;
 import com.christian.models.Localidad;
+import com.christian.models.Usuario;
 import com.christian.services.AdminService;
 import com.christian.services.ClienteService;
+import com.christian.services.UsuarioService;
 
 @Controller
 public class LoginController {
@@ -28,6 +30,9 @@ public class LoginController {
 	
 	@Inject
 	private AdminService adminService;
+	
+	@Inject 
+	private UsuarioService usuarioService;
 	
 	@RequestMapping(path="/login", method =  RequestMethod.GET)
 	public ModelAndView irALogin(){
@@ -39,20 +44,22 @@ public class LoginController {
 	
 	@RequestMapping(path="/loginVerificacion", method= RequestMethod.POST)
 	@ResponseBody
-	public String verificacionDelLogin(@ModelAttribute("Admin") Admin admin,HttpServletRequest request){
-		String respuesta = "error";
-		
-		if(admin.getUsuario().equals("") || admin.getPassword().equals("")){
-			respuesta = "vacio";
+	public String loginVerificacion(@ModelAttribute("Usuario") Usuario usuario,HttpServletRequest request){
+		JSONObject json = new JSONObject();
+		if(usuario.getEmail().equals("") || usuario.getPassword().equals("")){
+			json.put("respuesta", "vacio");
 		}else{
-			Admin administrador = adminService.getAdmin(admin.getUsuario(), admin.getPassword());
-			if(administrador != null){
+			Usuario usuarioBuscado = usuarioService.getUsuario(usuario.getEmail(), usuario.getPassword());
+			if(usuarioBuscado != null){
 				HttpSession session = request.getSession();
-				respuesta = administrador.getUsuario();
-				session.setAttribute("admin", administrador);	
-			}
+				session.setAttribute("usuarioNombre", usuarioBuscado.getNombre());
+				session.setAttribute("usuarioId", usuarioBuscado.getId());
+				session.setAttribute("usuarioRol", usuarioBuscado.getRol());
+				json.put("nombre", usuarioBuscado.getNombre());
+				json.put("rol", usuarioBuscado.getRol());
+			}else json.put("respuesta", "error");
 		}
-		return respuesta;
+		return json.toJSONString();
 	}
 	
 	@RequestMapping(path="/adminSalir")
@@ -60,5 +67,14 @@ public class LoginController {
 		HttpSession session = request.getSession();
 		session.removeAttribute("admin");
 		return new ModelAndView("redirect:index");
+	}
+	
+	@RequestMapping(path="/usuarioSalir")
+	public ModelAndView usuarioSalir(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		session.removeAttribute("usuarioNombre");
+		session.removeAttribute("usuarioRol");
+		session.removeAttribute("usuarioId");
+		return new ModelAndView("redirect:login");
 	}
 }

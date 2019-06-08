@@ -32,7 +32,7 @@
 		          <i class="fas fa-user"></i> Profile </a>
 		        <div class="dropdown-menu dropdown-menu-right navbar-dark light-blue darken-4 dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
 <!-- 		          <a class="dropdown-item" href="#">My account</a> -->
-		          <a class="dropdown-item text-white navbar-dark light-blue darken-4" href="adminSalir">Salir</a>
+		          <a class="dropdown-item text-white navbar-dark light-blue darken-4" href="usuarioSalir">Salir</a>
 		        </div>
      		</li>
      		</ul>

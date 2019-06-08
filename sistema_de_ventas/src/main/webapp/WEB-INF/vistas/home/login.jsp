@@ -4,7 +4,7 @@
 			<div class="col-xs-12 col-md-5 ">
 				<form class="text-center p-5">
 				    <p class="h4 mb-4 text-primary">Iniciar Sesión</p>
-					<input type="text" id="usuario" class="form-control mb-4" placeholder="Usuario o E-mail">
+					<input type="email" id="email" class="form-control mb-4" placeholder="Email">
 				    <input type="password" id="password" class="form-control mb-4" placeholder="Password">
 <!-- 				    <div class="d-flex justify-content-around"> -->
 <!-- 				        <div> -->
